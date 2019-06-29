@@ -1,0 +1,12 @@
+@import '../../../styles/variable.scss';
+
+.container{
+  display: inline-block;
+  width: calcPx(164);
+  height: calcPx(45);
+  line-height: calcPx(45);
+  text-align: center;
+  background: linear-gradient(180deg,rgba(254,234,0,1) 0%,rgba(252,208,0,1) 100%);
+  border-radius: calcPx(23);
+}
+  

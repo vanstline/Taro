@@ -1,0 +1,122 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: $white-bg-v2;
+}
+.message---{
+  .item-extra__info{
+    color: #FA5757
+  }
+}
+.user {
+  position: relative;
+  background: $white-bg-v2;
+
+  .mine-avatar {
+    width: calcPx(56);
+    height: calcPx(56);
+  }
+  .vip-type{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calcPx(56);
+    height: calcPx(24);
+    background: rgba(175,105,29,1);
+    border-radius: calcPx(2);
+    opacity: 0.66;
+    margin-left: calcPx(8);
+    font-size: calcPx(10);
+  }
+  .user-bg {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 306px;
+    background:linear-gradient(157deg,rgba(174,158,139,1) 0%,rgba(133,108,82,1) 100%);
+    border-radius: 0 0 12% 12%;
+  }
+
+  .header {
+    position: relative;
+    z-index: 1;
+    padding: $pages-padding-v4;
+    .user-info {
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      padding: $pages-padding-v4 0;
+      .info {
+        margin-left: $pages-padding-v2;
+        color: $nomal-color;
+        font-size: 16PX;
+        font-weight: 400;
+        .expire {
+          padding-top: $pages-padding-v2;
+          font-size: 12PX;
+          font-weight: 400;
+        }
+      }
+      .member-btn {
+        position: absolute;
+        bottom: 40px;
+        right: 0;
+        .at-button, at-icon {
+          vertical-align: top;
+        }
+        .at-button {
+          color: #fff;
+          border: 1PX solid rgba(187,150,112,1);
+          background:linear-gradient(170deg,rgba(217,192,160,1) 0%,rgba(187,150,112,1) 100%);
+          border-radius: $border-radius-small;
+        }
+      }
+    }
+
+    .share-invite {
+      display: flex;
+      justify-content: space-around;
+      box-sizing: content-box;
+      padding-top: $pages-padding-v4;
+      width: 686px;
+      height: 130px;
+      background: rgba(255,255,255,1);
+      box-shadow: 0PX 0PX 10PX 0PX rgba(0,0,0,0.06);
+      border-radius: $border-radius;
+      overflow: hidden;
+      .share, .invite {
+        display: flex;
+        justify-content: space-around;
+        font-size: $font-size-v4;
+        line-height: 1.8;
+        .icon {
+          margin-right: $pages-padding-v2;
+          image {
+            position: relative;
+            transform: translateY(50%);
+            width: 48px;
+            height: 48px;
+          }
+        }
+        .dec {
+          font-size: $font-size-v2;
+          color: $gray-color;
+          .date {
+            color: $red-color;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    .info-list {
+      // margin-bottom: $pages-padding-v4;
+      .info-service {
+        .item-content {
+          width:300px;
+        }
+      }
+    }
+  }
+}

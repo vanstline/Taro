@@ -1,0 +1,33 @@
+@import '../../styles/variable.scss';
+
+
+.my-card {
+  // margin: $pages-padding-v2 0;
+  padding: $pages-padding-v4;
+  background: #fff;
+  .my-card-head {
+    line-height: 66px;
+    display: flex;
+    justify-content: space-between;
+    .title, .extra {
+      display: flex;
+    }
+    .title {
+      font-size: 20PX;
+      font-weight: 500;
+      color: #4C4948;
+      justify-content: flex-start;
+    }
+    .extra {
+      font-size: 28px;
+      justify-content: flex-end;
+      color: #4C4948;
+      .at-icon {
+        color: #999;
+      }
+    }
+  }
+  .content {
+    font-size: 32px;
+  }
+}

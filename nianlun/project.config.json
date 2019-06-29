@@ -1,0 +1,70 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "taro-nianlun",
+	"description": "樊登年轮 小程序",
+	"appid": "wx868265acec5846c7",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"enhance": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/school/index",
+					"query": "a=1#b=2",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "test",
+					"pathName": "pages/school/index",
+					"query": "a=1,b=2",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "test",
+					"pathName": "pages/school/index",
+					"query": "a=1&b=2",
+					"scene": 1047
+				}
+			]
+		}
+	}
+}

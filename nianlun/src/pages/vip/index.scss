@@ -1,0 +1,69 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: $white-bg-v2;
+}
+.vip {
+  background: $white-bg-v2;
+  .header{
+    position: relative;
+    image{
+      position: absolute;
+    }
+    image.bg-img{
+      top: -10px;
+      width: 100%;
+      height: 376px;
+      z-index: 0;
+    }
+    image.vip-img{
+      width: calcPx(312);
+      height: calcPx(170);
+      left: calcPx(32);
+      top: calcPx(30);
+      z-index: 1;
+    }
+    .img-banner {
+      position: absolute;
+      top: calcPx(30);
+      left: 50%;
+      width: calcPx(312);
+      height: calcPx(170);
+      transform: translate(-50%);
+      border-radius: $border-radius-large;
+    }
+  }
+  .content{
+    position: relative;
+    top: calcPx(230);
+    .title-img{
+      text-align: center;
+      image{
+        width: calcPx(140);
+        height: calcPx(20);
+      }
+    }
+    .buy-have-know{
+      width: calcPx(311);
+      height: calcPx(152);
+      background: rgba(243,243,243,1);
+      border-radius: calcPx(8);
+      padding: calcPx(16);
+      color: #666666;
+      margin: 0 auto;
+    }
+    .to-do-buy{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 100px;
+      width: calcPx(311);
+      height: calcPx(50);
+      background:linear-gradient(180deg,rgba(254,233,0,1) 0%,rgba(252,207,0,1) 100%);
+      border-radius: calcPx(25);
+      margin: calcPx(40) auto;
+      text-align: center;
+      line-height: calcPx(50);
+    }
+  }
+}

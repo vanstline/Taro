@@ -1,0 +1,98 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: #fff;
+  border-top: 1PX solid $border-color;
+}
+
+.bind {
+  padding: $pages-padding-v4;
+  font-size: $font-size-v6;
+  color: $txt-color;
+  .binding {
+    .phone, .verify {
+      padding: $pages-padding-v4 0 $pages-padding-v1;
+      margin-bottom: $pages-padding-v3;
+    }
+    .phone {
+      display: flex;
+      justify-content: space-between;
+      height: 48px;
+      border-bottom: 1PX solid $border-color;
+      .content {
+        display: flex;
+        justify-content: space-around;
+        .deal {
+          margin-right: $pages-padding-v2;
+          width: 90px;
+          height: 48px;
+          font-size: $font-size-v4;
+          text-align: center;
+          background: rgba(238,238,238,1);
+          border-radius: $border-radius-large;
+        }
+        .input {
+          position: relative;
+          // transform: translateY(-4px);
+        }
+      }
+      .close {
+        width: 48px;
+        height: 48px;
+      }
+  
+    }
+    .verify {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1PX solid $border-color;
+      input {
+        padding-left: $pages-padding-v4;
+      }
+      .can-use.verify-btn {
+        background: $button-bg;
+      }
+      .verify-btn {
+        width: 220px;
+        height: 70px;
+        text-align: center;
+        line-height: 70px;
+        background: rgba(238,238,238,1);
+        border-radius: $border-radius-large;
+        background: rgba(238,238,238,1);
+      }
+    }
+  }
+
+  .binded {
+    .binded-content {
+      position: relative;
+      height: 400px;
+      .img-wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        image {
+          width: 200px;
+          height: 200px;
+        }
+        .bind-text {
+          margin-top: $pages-padding-v4;
+          line-height: 56px;
+          font-size: $font-size-v7;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(76,73,72,1);
+        }
+      }
+    }
+  }
+
+  .at-button {
+
+    margin-top: $pages-padding-v5 * 2;
+    border-radius: 50px;
+  }
+}

@@ -1,0 +1,84 @@
+@import '../../styles/variable.scss';
+
+
+.award {
+  .header {
+    position: relative;
+    padding: $pages-padding-v4;
+    text-align: center;
+    color: $gray-color;
+    font-size: $font-size-v5;
+    line-height: $font-size-v5;
+    background: #fff;
+    border-top: 1PX solid $border-color;
+    .title {
+      font-size: calcPx(16);
+      line-height: calcPx(22);
+      font-weight: 400;
+    }
+    .days {
+      margin-top: $pages-padding-v3;
+      text {
+        color: $red-color;
+        // font-size: $font-size-v6;
+        // line-height: 66px;
+        font-family: PingFangTC-Medium;
+        font-weight: 500;
+        font-size: calcPx(24);
+        line-height: calcPx(33);
+      }
+    }
+    .rule {
+      position: absolute;
+      top: 40px;
+      right: 0;
+      width: 200px;
+      height: 68px;
+    }
+  }
+
+  .award-list {
+    color: $gray-color;
+    .award-items {
+      padding: $pages-padding-v3 0;
+      border-bottom: 1PX solid $border-color;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        // padding-bottom: $pages-padding-v2;
+        .info {
+          font-size: $font-size-v6;
+          text {
+            margin: $pages-padding-v2 0;
+            color: $txt-color;
+          }
+        }
+        .incentive {
+          color: $red-color;
+          font-size: $font-size-v4;
+        }
+      }
+      .time {
+        margin-top: 8px;
+        font-size: 28px;
+      }
+    }
+  }
+  .no-more-message{
+    text-align: center;
+    color: #999999;
+    font-size: calcPx(14);
+  }
+}
+.force-list-item{
+  font-size: calcPx(16);
+  font-family: PingFangTC-Regular;
+  font-weight: 400;
+  color: rgba(102,102,102,1);
+  line-height: calcPx(22);
+  color: #666666;
+  margin-bottom: calcPx(24);
+  &:last-child{
+    margin-bottom: 0;
+  }
+}

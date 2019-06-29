@@ -1,0 +1,52 @@
+@import '../../styles/variable.scss';
+.credit-detail {
+  background:rgba(242,242,242,1);
+  .header{
+    position: relative;
+    height: calcPx(203);
+    margin-bottom: 96px;
+    background:linear-gradient(177deg,rgba(81,67,130,1) 0%,rgba(23,22,85,1) 100%);
+    .level {
+      position: absolute;
+      padding: 32px;
+      background:rgba(255,255,255,1);
+      box-shadow:0px 0px 12px 0px rgba(0,0,0,0.14);
+      border-radius:16px;
+      width: calc(100% - 128px);
+      left: 32px;
+      bottom: -76px;
+      .cur {
+        display: flex;
+        justify-content: space-between;
+        font-size: 32px;
+        .cur-score {
+          display: flex;
+        }
+      }
+      .lack {
+        display: flex;
+        font-size: 24px;
+        color: #999;
+      }
+    }
+  }
+  .body {
+    padding: 32px;
+    background: #fff;
+    .title {
+      font-size: 36px;
+      font-weight: 500;
+      padding-bottom: 40px;
+    }
+    .item {
+      font-size: 32px;
+      color: #4C4948;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 50px;
+    }
+  }
+  .score {
+    color: $orange-bg;
+  }
+}

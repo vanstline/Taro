@@ -1,0 +1,35 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: $white-bg-v2;
+}
+
+.force {
+  position: relative;
+  padding: $pages-padding-v4;
+  border-top: 1PX solid $border-color;
+  .force-items {
+    display: flex;
+    justify-content: flex-start;
+    padding: $pages-padding-v2;
+    border-bottom: 1PX solid $border-color;
+    .avatar {
+      margin-right: $pages-padding-v4;
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+      overflow: hidden;
+    }
+    .infos {
+      line-height: 1.6;
+      .user {
+        font-size: $font-size-v4;
+      }
+      .time {
+        padding-top: $font-size-v1;
+        font-size: $font-size-v3;
+        color: $gray-color;
+      }
+    }
+  }
+}

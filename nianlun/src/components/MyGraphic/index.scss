@@ -1,0 +1,52 @@
+@import '../../styles/variable.scss';
+
+
+.my-graphic {
+  display: flex;
+  // margin-bottom: $pages-padding-v4;
+  padding: $pages-padding-v2 0;
+  height: 232px;
+  background: #fff;
+  .my-graphic-img {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    width: calcPx(86);
+    height: calcPx(116);
+    image {
+      width: 100%;
+      height: 100%;
+      border-radius: 2PX;
+    }
+    .new {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      width: 64px;
+      height: 42px;
+      border-radius: 0;
+    }
+  }
+  .my-graphic-dec {
+    flex: 1;
+    padding-left: $pages-padding-v4;
+    color: #999;
+    font-size: 28px;
+    line-height: 36px;
+    .my-graphic-dec-title {
+      font-size: calcPx(17);
+      font-family: PingFangTC-Medium;
+      font-weight: 500;
+      color: rgba(76,73,72,1);
+      line-height: calcPx(22);
+      
+    }
+    .my-graphic-dec-content {
+      margin-top: calcPx(7);
+      font-size: calcPx(15);
+      display: flex;
+      height: 100%;
+    }
+  }
+  
+}

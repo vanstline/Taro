@@ -1,0 +1,33 @@
+@import '../../styles/variable.scss';
+
+.progress-wrap {
+  padding: 0 $pages-padding-v4;
+  .progress {
+    position: relative;
+    width: 100%;
+    padding: 6PX 0;
+    height: 4PX;
+    .progress-main {
+      background: #fff;
+      .bar {
+        height: 4PX;
+        background: #FCCF00;
+      }
+      .dot {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(-50%, -50%);
+        padding: 6PX;
+        border-radius: 50%;
+        .dot-bg {
+          width: 10PX;
+          height: 10PX;
+          background: #fff;
+          border-radius: 50%;
+          box-shadow: 1PX 1PX 10PX #000;
+        }
+      }
+    }
+  }
+}

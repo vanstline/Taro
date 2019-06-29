@@ -1,0 +1,24 @@
+@import './variable.scss';
+
+.at-card {
+  border: none !important;
+  .at-card__header {
+    border: none;
+  }
+}
+
+.at-button {
+  border: 1PX solid $button-bg;
+  background: $button-bg;
+  border-radius: $border-radius-small;
+}
+
+.at-tabs__item--active .at-tabs__item-underline {
+  left: 50% !important;
+  width: 50% !important;
+  height: 4PX !important;
+  transform: translate(-50%) !important;
+}
+.at-progress__outer-inner-background {
+  background: $button-bg;
+}

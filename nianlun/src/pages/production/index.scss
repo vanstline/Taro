@@ -1,0 +1,119 @@
+
+@import '../../styles/variable.scss';
+
+$butoom-with-calculation: $pages-padding-v4 * 2;
+
+page {
+  background: #fff;
+}
+
+.pro {
+  position: relative;
+  box-sizing: border-box;
+  padding: $pages-padding-v4;
+  height: 100vh;
+  border-top: 1PX solid $border-color;
+  input {
+    padding-bottom: $pages-padding-v4;
+  }
+  .commit {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    width: 90%;
+    transform: translate(-50%);
+  }
+
+  .voice-wrap {
+    
+    .audio-wrap, .voice {
+      position: absolute;
+      top: 50%;
+    }
+    .voice {
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      background-size: 100% 100%;
+      transform: translate(-50%, -50%);
+    }
+    .audio-wrap::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
+    .audio-wrap {
+      width: calc((100% - ( #{$pages-padding-v4} * 2)));
+      transform: translateY(-50%);
+      justify-content: space-around;
+      .audio {
+        float: left;
+        width: 490px;
+        vertical-align: middle;
+      }
+      .resetRecord {
+        float: right;
+        margin-top: 9px;
+        width: 120px;
+        height: 72px;
+        text-align: center;
+        font-size: $font-size-v4;
+        font-family:PingFangTC-Regular;
+        font-weight:400;
+        color: rgba(76,73,72,1);
+        line-height: 72px;
+        border-radius: $border-radius;
+        border: 1px solid rgba(204,204,204,1);
+      }
+    }
+  }
+
+  .image {
+    color: $gray-color;
+  }
+}
+
+.commit-review {
+  box-sizing: border-box;
+  padding: 162px 66px 0;
+  width: 632px;
+  height: 600px;
+  background-size: 100% 100%;
+  text-align: center;
+  line-height: 44px;
+  font-size: $font-size-v6;
+  .title {
+    font-family: PingFangSC-Medium;
+    font-weight: 400;
+    color: rgba(76,73,72,1);
+  }
+  .text {
+    margin-top: $pages-padding-v5;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(76,73,72,1);
+  }
+  .choice {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $pages-padding-v4;
+    > view {
+      width: 132px;
+      height: 132px;
+      line-height: 132px;
+      border: 1PX solid $border-color;
+      border-radius: 50%;
+    }
+    .medium {
+      border-color: #FFF4BD;
+      background: #FFF4BD;
+    }
+  }
+  .next {
+    padding-top: $pages-padding-v4;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+    text-decoration: underline;
+  }
+}

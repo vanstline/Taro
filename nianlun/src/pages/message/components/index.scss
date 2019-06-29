@@ -1,0 +1,22 @@
+@import '../../../styles/variable.scss';
+
+.empty {
+  padding: 200px auto 0;
+  width: 100%;
+  height: 467px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  image {
+    width: 246px;
+    height: 246px; 
+    vertical-align: middle;
+  }
+  .dec {
+    margin-top: $pages-padding-v3;
+    font-size: $font-size-v4;
+    color: $gray-color;
+    line-height: 1.6;
+  }
+}

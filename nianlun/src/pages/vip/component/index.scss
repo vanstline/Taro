@@ -1,0 +1,39 @@
+@import '../../../styles/variable.scss';
+
+.vip-title-container{
+  width: calcPx(311);
+  height: calcPx(109);
+  padding: calcPx(16);
+  background: rgba(243,243,243,1);
+  border-radius: calcPx(8);
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  .vip-title-container-icon{
+    margin-right: calcPx(10);
+    image{
+      width: calcPx(53);
+      height: calcPx(52);
+    }
+  }
+  .vip-title-container-content{
+    .vip-title-container-content-title{
+      font-size: calcPx(18);
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(76,73,72,1);
+      line-height: calcPx(25);
+      margin-bottom: calcPx(8);
+    }
+    .vip-title-container-content-body{
+      font-size: calcPx(16);
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(102,102,102,1);
+      line-height: calcPx(20);
+      >view:first-child{
+        margin-bottom: calcPx(8);
+      }
+    }
+  }
+}

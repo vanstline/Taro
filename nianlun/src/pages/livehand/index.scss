@@ -1,0 +1,75 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: $white-bg-v2;
+}
+
+.livehand {
+  height: 100vh;
+  background: url('https://nianlun-static.oss-cn-hangzhou.aliyuncs.com/assets/livehand-bg.png') no-repeat center center;
+  background-size: cover;
+  .image-container {
+    width: 100%;
+    height: calcPx(403 + 32 + 32);
+    padding: calcPx(32);
+    padding-bottom: calcPx(10);
+    position: relative;
+
+    image {
+      width: calcPx(311);
+      height: calcPx(403);
+    }
+
+    .livehand-content {
+      position: absolute;
+      top: calcPx(60);
+      left: calcPx(64);
+      .livehand-content-title {
+        width: calcPx(108);
+        height: calcPx(25);
+        font-size: calcPx(18);
+        font-family: PingFangTC-Regular;
+        font-weight: 400;
+        color: rgba(76, 73, 72, 1);
+        line-height: calcPx(25);
+        margin-bottom: calcPx(42);
+      }
+
+      .livehand-content-body {
+        width: calcPx(246);
+        height: calcPx(152);
+        font-size: calcPx(16);
+        font-family: PingFangTC-Regular;
+        font-weight: 400;
+        color: rgba(76, 73, 72, 1);
+        line-height: calcPx(25);
+      }
+    }
+  }
+  .livehand-button-container{
+    // position: fixed;
+    // bottom: calcPx(128);
+    // left: 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 calcPx(16);
+  }
+  .livehand-button-container-after{
+    text-align: center;
+    margin-top: calcPx(24);
+    font-size: calcPx(18);
+    font-weight: 400;
+    color: rgba(201,82,13,1);
+    text-decoration: underline;
+  }
+}
+
+.lbtn{
+  display: inline-block;
+  width: calcPx(164);
+  height: calcPx(45);
+  line-height: calcPx(45);
+  text-align: center;
+  background: linear-gradient(180deg,rgba(254,234,0,1) 0%,rgba(252,208,0,1) 100%);
+  border-radius: calcPx(23);
+}

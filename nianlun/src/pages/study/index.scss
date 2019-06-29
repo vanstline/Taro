@@ -1,0 +1,251 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: #F9F9F9;
+}
+.study {
+  .banner {
+    height: 421px;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+ 
+  .study-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: $footer-height;
+    background: #eee;
+    view, button {
+      position: relative;
+      width: 146px;
+      height: 64px;
+      text-align: center;
+      line-height: 64px;
+      font-size: $font-size-v6;
+      background: $nomal-color;
+      box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.14);
+      border-radius: $border-radius-small;
+      button {
+        width: 146px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 18PX;
+        font-family: PingFangTC-Medium;
+        font-weight: 500;
+        color: rgba(76,73,72,1);
+        background: rgba(255,255,255,1);
+        box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.14);
+        border-radius: 8px;
+        padding: 0;
+      }
+    }
+    
+  }
+}
+
+
+.catalog {
+  .catalog-body {
+    padding: 0 52px;
+  }
+  .catalog-body {
+    background: $nomal-bg;
+    .catalog-li {
+      display: flex;
+      padding: $pages-padding-v2 0;
+      font-size: $font-size-v6;
+      .lesson {
+        flex: 3;
+        font-size: 16PX;
+        font-family: PingFangTC-Medium;
+        font-weight: 500;
+        color: rgba(76,73,72,1);
+        line-height: 44px;
+        .info {
+          padding-top: 16px;
+          display: flex;
+          justify-content: flex-start;
+          color: $gray-color;
+          font-size: 28px;
+          font-family: PingFangTC-Medium;
+          font-weight: 500;
+          color: rgba(153,153,153,1);
+          line-height: 40px;
+          .type {
+            margin-right: $pages-padding-v2;
+          }
+        }
+      }
+      .btn-wrap {
+        display: flex;
+        flex: 1;
+        text-align: center;
+        justify-content: flex-end;
+        line-height: 80px;
+        color: $gray-color;
+
+        font-size: 28px;
+        font-family: PingFangTC-Regular;
+        font-weight: 400;
+        color: rgba(153,153,153,1);
+      }
+    }
+  }
+  .catalog-content {
+    padding-top: $pages-padding-v4;
+    .scroll {
+      white-space: nowrap;
+      .lesson-items-wrap {
+        display: inline-block;
+        padding: 0 $pages-padding-v3;
+      }
+      .lesson {
+        position: relative;
+        box-sizing: border-box;
+        padding: $pages-padding-v3*2 $pages-padding-v2*2;
+        width: calcPx(190);
+        height: calcPx(120);
+        background: rgba(243,243,243,1);
+        border-radius: $border-radius-small;
+        border: 1PX solid rgba(243,243,243,1);
+        .lesson-name {
+          white-space: normal;
+          line-height: 1.6;
+          height: calcPx(52);
+          font-size: $font-size-v6;
+        }
+      }
+      .active {
+        border: 1PX solid #48A01F;
+
+        .lesson-name {
+          color: #48A01F;
+          font-size: 16PX;
+          font-family: PingFangTC-Regular;
+          font-weight: 400;
+          line-height: 44px;
+        }
+      }
+      .sign {
+        position: absolute;
+        left: $pages-padding-v2*2;
+        top: 0;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: $font-size-v2;
+        background:  $E5-bg;
+
+       
+      }
+      .try, .lock {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+      }
+      .try {
+        width: 36px * 2;
+        height: 17px * 2;
+        font-weight: 400;
+        line-height: 17px * 2;
+        font-size: 28px;
+        font-family: PingFangTC-Regular;
+        font-weight: 400;
+        color: rgba(72,160,31,1);
+      }
+      .lock {
+        width: 32px;
+        height: 40px;
+        background: url(IMG_URL('lock-lesson-icon.png'));
+        background-size: 100% 100%;
+      }
+    }
+  }
+}
+
+.draft {
+  padding-bottom: $footer-height;
+  .draft-content {
+    color: #4C4948;
+    font-size: $font-size-v6;
+    line-height: 44px;
+    text-indent: 2em;
+  }
+}
+
+.showroom {
+  padding-bottom: $footer-height;
+
+  .upload {
+    padding: $pages-padding-v4 0;
+  }
+
+  .homework {
+    .homework-title {
+      padding: $pages-padding-v2 ;
+      .homework-nub {
+        color: $red-color;
+      }
+    }
+
+    .show-items {
+      padding-bottom: $pages-padding-v2;
+      border-bottom: 1PX solid #ccc;
+      .user-info {
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        .info {
+          margin-left: $pages-padding-v2;
+          .expire {
+            padding-top: $pages-padding-v2;
+            font-size: $font-size-v4;
+            color: $gray-color;
+          }
+        }
+        .member-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 0;
+          .at-button, at-icon {
+            vertical-align: top;
+          }
+          .at-button {
+            color: #fff;
+            border: 1PX solid rgba(187,150,112,1);
+            background:linear-gradient(170deg,rgba(217,192,160,1) 0%,rgba(187,150,112,1) 100%);
+            border-radius: $border-radius-small;
+          }
+        }
+      }
+  
+      .img {
+        width: 100%;
+        height: 354px;
+      }
+  
+      .review {
+        padding: $pages-padding-v2 0;
+        font-size: $font-size-v6;
+        line-height: 44px;
+      }
+    }
+  }
+}
+
+.at-tabs__item {
+  height: 43px;
+  font-size: 36px;
+  font-family: PingFangTC-Medium;
+  font-weight: 500;
+  color:rgba(153,153,153,1);
+  line-height: 43px;
+}
+.at-tabs__item.at-tabs__item--active {
+  color: rgba(76,73,72,1);
+}

@@ -1,0 +1,45 @@
+@import '../../styles/variable.scss';
+
+
+page {
+  position: relative;
+  background:rgba(0,0,0,0.7);
+  height: 100vh;
+}
+
+.user-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calcPx(251);
+  height: calcPx(177);
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: $border-radius;
+  text-align: center;
+  line-height: 44px;
+  font-family: PingFangSC-Medium;
+  font-size: $font-size-v6;
+  font-weight: 400;
+  .icon {
+    margin: $pages-padding-v5 auto;
+    width: calcPx(108);
+    height: calcPx(30);
+    background-image: url(IMG_URL('authorization.png'));
+    background-size: 100% 100%;
+  }
+
+  .text {
+    color: rgba(51,51,51,1);
+  }
+  .at-button {
+    margin: calcPx(20) auto 0;
+    width: calcPx(146);
+    height: calcPx(40);
+    line-height: calcPx(40);
+    background: rgba(83,204,86,1);
+    border-radius: calcPx(20);
+    color: rgba(255,255,255,1);
+    border: none;
+  }
+}

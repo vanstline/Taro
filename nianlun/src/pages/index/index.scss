@@ -1,0 +1,196 @@
+@import '../../styles/variable.scss';
+
+.at-card  {
+  .at-card__header {
+    .at-card__header-thumb {
+      flex: 0 0 72px;
+      height: 72px;
+    }
+  }
+}
+
+.head {
+  box-sizing: border-box;
+  padding: $pages-padding-v4;
+  // height: 500px;
+  background:linear-gradient(180deg,rgba(19,25,87,1) 0%,rgba(60,29,99,0) 100%);
+  // .learn {
+  //   text-align: center;
+  //   .diploma {
+  //     width: 100%;
+  //     height: 240px;
+  //     background: $theme-background-color;
+  //   }
+  //   .learn-log {
+  //     display: flex;
+  //     margin-top: $pages-padding-v2;
+  //     justify-content: space-around;
+  //     line-height: 1.8;
+  //     .learn-log-items {
+  //       .time {
+  //         text {
+  //           font-size: $font-size-v6;
+  //           font-weight: 700;
+  //         }
+  //       }
+  //     }
+  //   }
+  // } 
+
+  .card {
+    position: relative;
+    padding: 74px 32px 48px;
+    background: $nomal-bg;
+    border-radius: $border-radius-small;
+    .sign {
+      position: absolute;
+      top: 0;
+      left: 0;
+      // width: 200px;
+      padding: 0 28px;
+      height: 60px;
+      background: #F7F5D9;
+      font-size: $font-size-v2;
+      line-height: 60px;
+      text-align: center;
+      border-radius: $border-radius-small 0 $border-radius-small 0;
+    }
+
+    .card-content {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: $pages-padding-v4;
+      .info {
+        .level {
+          line-height: 28px;
+          .txt, .icon {
+            vertical-align: middle;
+          }
+          .txt {
+            margin-right: $pages-padding-v4;
+            font-size: $font-size-v7;
+          }
+          .icon {
+            display: inline-block;
+            padding: 4px $pages-padding-v2;
+            color: #FF6105;
+            font-size: $font-size-v4;
+            border: 2PX solid #FF6105;
+          }
+        }
+        .rate {
+          margin: $pages-padding-v2 0;
+        }
+        .progress {
+          padding: $pages-padding-v2 $pages-padding-v4;
+          color: $gray-color;
+          font-size: $font-size-v2;
+          background: #f2f2f2;
+          border-radius: $border-radius-large;
+          text {
+            color: $red-color;
+          }
+        }
+        
+      }
+      .img {
+        width: 174px;
+        height: 174px;
+        border-radius: 100%;
+        overflow: hidden;
+      }
+    }
+    .learn-log {
+      display: flex;
+      margin-top: $pages-padding-v2;
+      justify-content: space-around;
+      line-height: 1.8;
+      .learn-log-items {
+        color: $gray-color;
+        font-size: $font-size-v4;
+        .time {
+          text-align: center;
+          color: #4C4948;
+          font-size: $font-size-v2;
+          text {
+            font-size: $font-size-v7;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.content {
+  padding-top: $pages-padding-v4;
+  background: $pages-banner-background-color;
+
+  .actives {
+    image {
+      width: 100%;
+      height: 344px;
+      border-radius: $border-radius;
+    }
+    .main {
+      margin-top: -$pages-padding-v2;
+      padding: $pages-padding-v2;
+      color: $placeholder-text-color;
+      background: $white-bg-v2;
+      .title {
+        font-size: 34px;
+        font-weight: 500;
+        color: rgba(76,73,72,1);
+      }
+      .cont {
+        position: relative;
+        font-size: 28px;
+        color: #666;
+        .at-button {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+
+}
+.graphic-describe {
+  width: 100%;
+  .at-progress {
+    padding: 20px 0;
+  }
+  .at-progress__content {
+    display: none;
+  }
+  .at-progress__outer-inner-background {
+    background: $theme-background-color;
+  }
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    font-weight: 400;
+    .last-study {
+      display: flex;
+      .last-study-num {
+        color: #222;
+      }
+    }
+    .reRead-study {
+      color: #FF6105;
+    }
+  }
+  .progress-reRead {
+    .at-progress__outer-inner{
+      background: $theme-background-color;
+      .at-progress__outer-inner-background {
+        background: #FF6105;
+      }
+    }
+    
+    
+  }
+}

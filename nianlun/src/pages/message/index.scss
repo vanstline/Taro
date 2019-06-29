@@ -1,0 +1,59 @@
+@import '../../styles/variable.scss';
+
+.message-wrap {
+  min-height: 100vh;
+  background: #f2f2f2;
+  .message, .inform {
+    position: relative;
+  }
+}
+.scroll-view{
+  height: calc('100%' - calcPx(20));
+}
+.message-item{
+  background: rgba(255,255,255,1);
+  padding: calcPx(16);
+  margin-top: calcPx(1);
+}
+.message-title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: calcPx(16);
+  color: #333333;
+  margin-bottom: calcPx(8);
+  .message-time{
+    color: #999999;
+    font-size: calcPx(14);
+  }
+}
+
+.message-content{
+  font-size: calcPx(16);
+  color: #333333;
+  display: flex;
+  justify-content: space-between;
+  .message-notifyBody {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    flex: 1;
+  }
+  .message-link {
+    color: #f90;
+    width: 132px;
+
+  }
+  
+}
+.has-read {
+  color: #999;
+  .message-title,.message-notifyBody {
+    color: #999;
+  }
+}
+.no-more-message{
+  text-align: center;
+  color: #999999;
+  font-size: calcPx(14);
+}

@@ -1,0 +1,77 @@
+@import '../../styles/variable.scss';
+
+.sweep {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 80px;
+  // width: 566px;
+  // height: 674px;
+  // width: 676px;
+  height: 754px;
+  background-size: 100% 100%;
+
+  .card-img {
+    position: absolute;
+    top: calcPx(98);
+    left: 50%;
+    width: calcPx(196);
+    height: calcPx(140);
+    transform: translate(-50%);
+    border-radius: calcPx(10);
+  }
+  .sweep-text {
+    padding-top: 514px;
+    font-size: $font-size-v4;
+    color: #333;
+    line-height: 44px;
+  }
+  .at-button {
+    width: calcPx(120);
+    border-radius: calcPx(54);
+    font-size: 16PX;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(51,51,51,1);
+  }
+}
+
+.sweep-success {
+  box-sizing: border-box;
+  padding-top: calcPx(24);
+  width: calcPx(283);
+  height: calcPx(283);
+  background-size: 100% 100%;
+  font-size: 18PX;
+  font-weight: 500;
+  line-height: 50px;
+  text-align: center;
+  font-family:PingFangSC-Medium;
+  color: rgba(76,73,72,1);
+  > view {
+    margin-bottom: 20px;
+  }
+  .expiry {
+    padding-top: calcPx(34);
+    height: 44px;
+    font-size: 16PX;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(102,102,102,1);
+    line-height: 44px;
+  }
+  .at-button {
+    margin-top: calcPx(57);
+    width: calcPx(146);
+    padding: calcPx(9) 0;
+    height: calcPx(40);
+    background: linear-gradient(180deg,rgba(138,135,134,1) 0%,rgba(82,79,78,1) 100%);
+    font-size: 16PX;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: rgba(255,255,255,1);
+    line-height: 44px;
+    border: none;
+    border-radius: 40px;
+  }
+}

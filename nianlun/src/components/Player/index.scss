@@ -1,0 +1,63 @@
+.components-player {
+  position: fixed;
+  bottom: 60px;
+  width: 92%;
+  height: 120px;
+  left:4%;
+  color: #fff;
+  border-radius: 24px;
+  z-index: 9999;
+  background: #999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: .95;
+  
+  
+  font-size: 28px;
+  .play-right {
+    display: flex;
+    padding-left: 32px;
+  }
+  .close {
+    width: 48px;
+    height: 48px;
+   
+    padding: 10px 16px 10px 32px;
+  }
+  .subject {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    .cover {
+      width: 76px;
+      height: 76px;
+      border-radius: 100%;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .subject-right {
+      padding-left: 24px;
+      .status {
+        font-size: 24px;
+      }
+    }
+  }
+  
+  .operation {
+    width: 56px;
+    height: 56px;
+    padding: 10px 32px;
+  }
+  
+  
+}
+.play {
+  .cover {
+    animation: rotateImg 4s infinite linear;
+  }
+}
+@keyframes rotateImg{
+  from{transform: rotate(0);}
+  to{transform: rotate(360deg);}
+}

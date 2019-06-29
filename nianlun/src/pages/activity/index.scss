@@ -1,0 +1,149 @@
+@import '../../styles/variable.scss';
+
+.banner {
+  height: 420px;
+  image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.content {
+  padding-top: $pages-padding-v4;
+  background: $pages-banner-background-color;
+
+  .actives {
+    padding-bottom: 32px;
+    image {
+      width: 100%;
+      height: 344px;
+      border-radius: $border-radius;
+      background-color: rosybrown;
+    }
+    .main {
+      margin-top: -$pages-padding-v2;
+      padding: $pages-padding-v2;
+      color: $placeholder-text-color;
+      background: $white-bg-v2;
+      .title {
+        font-size: 32px;
+        font-weight: 500;
+        padding-bottom: 20px;
+        color: #4C4948;
+      }
+      .cont {
+        color: #999;
+        line-height: 40px;
+        font-size: 28px;
+        padding: 16px 0;
+        position: relative;
+        .at-button {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+  
+
+}
+.actives-detail {
+  background-color: #F3F3F3;
+  min-height: 100vh;
+  .header{
+    background-color: #fff;
+    image {
+      width: 100%;
+      height: calcPx(188);
+      background-color: rosybrown;
+    }
+    .main {
+      padding: calcPx(16);
+      .title {
+        font-size: 34px;
+        font-weight: 500;
+        padding-bottom: 20px;
+      }
+      .progress {
+        display: flex;
+        justify-content: space-between;
+        .at-progress {
+          margin-top: 14px;
+          .at-progress__content {
+            display: none;
+          }
+          .at-progress__outer-inner-background {
+            background-color: $button-bg;
+          }
+        }
+        .signUpNum {
+          color: #999;
+          font-size: 28px;
+        }
+      }
+      .cont {
+        color: #666;
+        line-height: 40px;
+        font-size: 32px;
+        padding: 16px 0;
+        position: relative;
+        .place {
+          margin-top: 16px;
+        }
+        .gps {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          color: #4E77EB;
+          text-decoration: underline;
+          .nav-bg {
+            vertical-align: middle;
+            display: inline-block;
+            margin-right: 8px;
+            width: 40px;
+            height: 40px;
+            background: url(IMG_URL('nav_icon.png'));
+            background-size: 100% 100%;
+
+          }
+        }
+      }
+    }
+  }
+  .body {
+    margin-top: 20px;
+    padding: 32px;
+    background-color: #fff;
+    font-size: 32px;
+    .title {
+      font-weight: 500;
+    }
+    .info {
+      font-size: 28px;
+      color: #666;
+    }
+
+  }
+  .footer {
+    position: fixed;
+    bottom: 48px;
+    width: 100%;
+    .sign-up {
+      margin: 0 auto;
+      width: calcPx(343);
+      height: calcPx(46);
+      .at-button {
+        width: calc(100%-128px);
+        border-radius: $border-radius;
+        border: none;
+      }
+      .unJoin {
+        background-color: #ff6105;
+        border-color: #999;
+      }
+    }
+    
+  }
+  
+}

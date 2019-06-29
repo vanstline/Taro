@@ -1,0 +1,45 @@
+@import '../../styles/variable.scss';
+.info-list {
+  height: 100vh;
+  background: #f5f5f5;
+  .item-extra__image {
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    overflow: hidden;
+  }
+}
+.info-update {
+  height: 100vh;
+  background: #f5f5f5;
+  .input {
+    input {
+      padding: 28px 32px;
+      background: #fff;
+      font-size: 28px;
+    }
+    .radio-gender {
+      padding: 28px 32px 0;
+      font-size: 24px;
+      background: #fff;
+      .radio-item {
+        display: flex;
+        justify-content: space-between;
+        line-height: 80px;
+        height: 100px;
+        border-bottom: 1px solid #eee;
+      }
+      .radio-item:last-child{
+        border-bottom: none;
+        icon {
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+  .btn {
+    margin-top: 200px;
+    width: 80%;
+    border-radius: $border-radius-large*2;
+  }
+}

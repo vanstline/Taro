@@ -1,0 +1,24 @@
+@import '../../styles/variable.scss';
+
+.audio {
+  padding: 0 $pages-padding-v4;
+  height: 84px;
+  line-height: 84px;
+  background:rgba(243,243,243,1);
+  border-radius: $border-radius;
+  border: 1PX solid rgba(232,232,232,1);
+  text {
+    display: inline-block;
+    margin-left: 10px;
+    width: 60px;
+    height: 60px;
+    vertical-align: middle;
+    background-size: 100% 100%;
+  }
+  .play {
+    background-image: url(IMG_URL('play-the-tape.gif'));
+  }
+  .pause {
+    background-image: url(IMG_URL('pause-the-tape.png'));
+  }
+}

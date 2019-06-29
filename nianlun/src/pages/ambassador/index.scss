@@ -1,0 +1,47 @@
+@import '../../styles/variable.scss';
+.z-ambassador {
+  // background: url('https://nianlun-static.oss-cn-hangzhou.aliyuncs.com/assets/ambassador-bg.png');
+  height: 100vh;
+  background-size:cover;
+  .logo {
+    padding-top: calcPx(24);
+    padding-left: calcPx(16);
+    width: calcPx(176);
+    height: calcPx(32);
+  }
+  .scroll {
+    margin-top: calcPx(79);
+    width: 100%;
+    height: calcPx(193);
+    text-align: center;
+    
+    .title {
+      padding-top: calcPx(24);
+      font-size:calcPx(24);
+      font-weight:500;
+      color:rgba(51,51,51,1);
+    }
+    .describe {
+      font-size:calcPx(16);
+      font-weight:400;
+      color:rgba(156,156,156,1);
+      padding-top: calcPx(24)
+    }
+  }
+  .btn {
+    text-align: center;
+    padding-top: calcPx(20);
+    flex-wrap: wrap;
+    image {
+      width: calcPx(220);
+      height: calcPx(50);
+    }
+    .cancel {
+      font-size:calcPx(18);
+      font-weight:400;
+      color:rgba(226,155,86,1);
+      width: 100%;
+      padding-top: calcPx(24);
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: $nomal-bg;
+}
+
+.add-weChat-container{
+  .add-weChat-button{
+    width: calcPx(343);
+    margin: calcPx(30) calcPx(16);
+    margin-bottom: calcPx(60)
+  }
+}

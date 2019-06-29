@@ -1,0 +1,51 @@
+@import '../../styles/variable.scss';
+
+.activation {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 80px;
+  // width: 566px;
+  // height: 674px;
+  // width: 676px;
+  height: 754px;
+  background-size: 100% 100%;
+  .activation-text {
+    padding-top: 514px;
+    font-size: $font-size-v4;
+    color: #333;
+    line-height: 44px;
+  }
+}
+
+
+.activation-password {
+  padding-top: $pages-padding-v5;
+  border-top: 1PX solid $border-color;
+  text-align: center;
+  .remind {
+    height: 50px;
+    line-height: 50px;
+    font-size: $font-size-v6;
+    font-family: PingFangTC-Medium;
+    font-weight: 500;
+    color: rgba(76,73,72,1);
+  }
+  .input {
+    margin: 0 auto;
+    padding-top: 90px;
+    width: 600px;
+    input {
+      background: #f2f2f2;
+      height: 80px;
+      border: 1PX solid $border-color;
+      border-radius: $border-radius;
+      letter-spacing: 10px;
+    }
+    .btn {
+      margin-top: 100px;
+      width: 400px;
+      border-radius: $border-radius-large*2;
+    }
+  }
+
+}

@@ -1,0 +1,92 @@
+@import '../../styles/variable.scss';
+
+page {
+  background: #f2f2f2;
+  border-top: 1PX solid $border-color;
+}
+
+.buy-wrap {
+  .goods::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  .goods {
+    padding: $pages-padding-v4;
+    .images {
+      float: left;
+      margin-right: 32px;
+      width: 172px;
+      height: 232px;
+    }
+    .content {
+      float: left;
+      width: 480px;
+      .title {
+        font-size: 34px;
+        font-family: PingFangSC-Medium;
+        font-weight: 500;
+        color: rgba(76,73,72,1);
+        line-height: 44px;
+      }
+      .desc {
+        padding-top: $pages-padding-v2;
+        font-size: 16PX;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: #666;
+        line-height: 40px;
+      }
+    }
+  }
+  .goods-details-ul {
+    background: #fff;
+    font-size: $font-size-v6;
+    color: $gray-color;
+    .goods-details-li {
+      display: flex;
+      justify-content: space-between;
+      padding: $pages-padding-v3 $pages-padding-v4;
+      height: 44px;
+      line-height: 44px;
+      border-bottom: 1PX solid $border-color;
+      .chapter {
+        color: $txt-color;
+      }
+      .price {
+        color: #FF513F;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .btn-wrap {
+    padding: 0 $pages-padding-v4;
+    // button {
+    //   margin-top: $pages-padding-v5;
+    // }
+    .buy-lesson {
+      margin-top: $pages-padding-v5;
+      color: #FC8300;
+      border: 1PX solid #FC8300;
+      border-radius: $border-radius;
+      background: transparent;
+    }
+    .buy-member {
+      margin-top: $pages-padding-v5;
+      color: #fff;
+      background: linear-gradient(180deg,rgba(254,184,0,1) 0%,rgba(252,130,0,1) 100%);
+      border-radius: $border-radius;
+    }
+    .buy-info {
+      margin-top: $pages-padding-v2;
+      text-align: center;
+      height: 40px;
+      font-size: $font-size-v4;
+      font-family: PingFangTC-Regular;
+      font-weight: 400;
+      color: rgba(252,131,0,1);
+      line-height: 40px;
+    }
+  }
+}
