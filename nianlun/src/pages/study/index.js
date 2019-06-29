@@ -6,6 +6,8 @@ import { Catalog, Draft, Showroom } from './components'
 import connect from '../../connect/course'
 import connectUesr from '../../connect/user'
 import WhiteSpace from '../../components/WhiteSpace'
+import MyAudio from '../../components/MyAudio'
+import MyVedio from '../../components/MyVedio'
 import { giveAwardDaysAfterShare } from '@services/mine'
 import Footer from '../../components/Footer'
 import { bookCourseChapterWorkPage, bookCourseDetail, bookCourseChapterManuscriptPage } from '../../services/book'
@@ -177,10 +179,6 @@ export default class Study extends Component {
   }
 
   componentWillUnmount() {
-    // const { getWorkListPage } = this.props
-    // const bookCourseId = this.state.courseDetail.id
-    // getWorkListPage({ bookCourseId, type: 3 }, 'all')
-
   }
 
   // 播放结束 自动续波下一节
@@ -201,6 +199,22 @@ export default class Study extends Component {
     } = this.state
     const { cantry } = this.$router.params
     const bookCourseId = this.$router.params.id || 1
+    const header = {
+      id: courseDetail.id,
+      type: 2,
+      title: courseDetail.title
+    }
+    let mediaType = true
+    let vedioObj = {}
+    let audioObj = {}
+    if(courseDetail.bccList[currentIndex].bookCourseMediaVideoRespList) {
+      vedioObj = courseDetail.bccList[currentIndex].bookCourseMediaVideoRespList[0]
+      mediaType = true
+    }
+    if(courseDetail.bccList[currentIndex].bookCourseMediaAudioRespList) {
+      audioObj = courseDetail.bccList[currentIndex].bookCourseMediaAudioRespList[0]
+      mediaType = false
+    }
     // let bookCourseChapterId = bccList[currentIndex].id
     const buttonStyle = {
       padding: 0,
@@ -209,12 +223,18 @@ export default class Study extends Component {
       fontSize: '18px',
       fontWeight: '400'
     }
-
+    console.log(vedioObj, currentIndex)
     return (
       <View className='study'>
-        <View className='banner'>
-          {
+        <View className='banner' key={currentIndex}>
+          {/* {
             courseDetail && <Media source={courseDetail.bccList[currentIndex]} course={courseDetail} onNextLesson={this.handleNextLesson}/>
+          } */}
+          {
+            mediaType && vedioObj.id && <MyVedio header={header} vedioObj={vedioObj} callback={this.handleNextLesson} />
+          }
+          {
+            !mediaType && audioObj.id && <MyAudio header={header} audioObj={audioObj} callback={this.handleNextLesson} />
           }
         </View>
         <View style={{ marginBottom: this.props.system.paddinBottom }}>

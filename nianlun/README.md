@@ -1,4 +1,4 @@
-# pinlor-static-fandeng-nianlun
+# fandeng-nianlun
 
 樊登年轮  小程序
 

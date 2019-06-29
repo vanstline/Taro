@@ -18,10 +18,16 @@ export default class MyAudio extends Component<Props, any> {
       header: props.header
     }
   }
-  // vedioPlayTime = 0
   vedioCurrentTime = 0 
   t1 = parseInt(Date.now()/1000)
   t2 = 0
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.vedioObj.id !== this.state.vedioObj.id) {
+      this.sendLog()
+      this.setState({ vedioObj: nextProps.vedioObj })
+    }
+  }
 
   componentDidMount() {
     let { vedioObj } = this.state
@@ -48,9 +54,11 @@ export default class MyAudio extends Component<Props, any> {
   }
 
   componentWillUnmount() {
+    this.sendLog()
+  }
 
+  sendLog() {
     let t2 = this.t1 ? parseInt(Date.now()/1000) - this.t1 + this.t2 : this.t2
-   
     const { vedioObj, header } = this.state
     Taro.setStorageSync('VEDIODATA', {...vedioObj,
       type: 2,
@@ -69,6 +77,12 @@ export default class MyAudio extends Component<Props, any> {
     })
   }
 
+  handlePlayEnd = () => {
+    if(this.props.callback && typeof this.props.callback === 'function') {
+      this.props.callback()
+    }
+  }
+
   render() {
     const { vedioObj }  = this.state
     return (
@@ -78,6 +92,7 @@ export default class MyAudio extends Component<Props, any> {
         autoplay
         onPause={this.onPause}
         onPlay={this.onPlay}
+        onEnded={this.handlePlayEnd}
         onTimeUpdate={this.handleTimeUpdate}
       ></Video>
     )

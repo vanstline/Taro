@@ -1,6 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import Rate from '../../../components/Progress'
+import MyAudio from '../../../components/MyAudio'
+import MyVedio from '../../../components/MyVedio'
 import { getTime, clientRect } from '../../../utils/utils'
 import { addLearnLog } from '../../../services/school'
 import throttle from '../../../common/throttle'
@@ -17,6 +19,7 @@ export default class Media extends Component {
     super(props)
     this.state = {
       source: {},
+      course: props.course,
       audioObj: {
         paused: true,
         currentTime: 0,
@@ -213,16 +216,21 @@ export default class Media extends Component {
     }
   }
 
-  handlePlayEnd =  () => {
+  handlePlayEnd = () => {
     this.props.onNextLesson()
   }
 
   render() {
-    const { mediaType, source, audioObj } = this.state
+    const { mediaType, source, audioObj, course } = this.state
     let { paused, currentTime, startTime, durationTime } = audioObj
+    const header = {
+      id: course.id,
+      type: 2,
+      title: course.title
+    }
     return (
       <View className='media'>
-        {
+        {/* {
           mediaType && source.bookCourseMediaVideoRespList && (
             <Video id='myVedio'
               src={source.bookCourseMediaVideoRespList[0].filePath}
@@ -250,6 +258,12 @@ export default class Media extends Component {
               <Text className='end'>{getTime(durationTime)}</Text>
             </View>
           )
+        } */}
+        {
+          mediaType && source.bookCourseMediaVideoRespList && <MyVedio header={header} vedioObj={source.bookCourseMediaVideoRespList[0]} />
+        }
+        {
+          !mediaType && <MyAudio header={header} audioObj={source.bookCourseMediaAudioRespList[0]} />
         }
       </View>
     )

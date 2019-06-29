@@ -25,6 +25,13 @@ export default class MyAudio extends Component<Props, any> {
   }
   initDate = 0
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.audioObj.id !== this.state.audioObj.id) {
+      this.sendLog()
+      this.setState({ audioObj: nextProps.audioObj })
+    }
+  }
+
   // 转换音视频
   transMedia(media) {
     const cacheAudio = Taro.getStorageSync('AUDIODATA')
@@ -64,6 +71,7 @@ export default class MyAudio extends Component<Props, any> {
       timer = setInterval(() => {
         if(currentTime >= durationTime) {
           this.handlePushAudio(!paused, currentTime)
+          this.handlePlayEnd()
           return
         }
         currentTime++
@@ -80,6 +88,8 @@ export default class MyAudio extends Component<Props, any> {
   }
 
   componentDidMount() {
+    Taro.getBackgroundAudioManager().pause()
+
     this.setAudio()
   }
 
@@ -123,6 +133,12 @@ export default class MyAudio extends Component<Props, any> {
       learnDurationTime: gap,
       learnPointTime: audioObj.currentTime,
     })
+  }
+
+  handlePlayEnd = () => {
+    if(this.props.callback && typeof this.props.callback === 'function') {
+      this.props.callback()
+    }
   }
 
   render() {
