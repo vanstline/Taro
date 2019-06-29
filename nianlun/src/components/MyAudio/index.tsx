@@ -113,16 +113,16 @@ export default class MyAudio extends Component<Props, any> {
       paused: audioObj.paused
     })
 
-    // 似乎没有必要发消息
-    // if(gap <= 2) return
+    // 这里书籍可以有冲突 ，但课程是必须要发送
+    if(gap <= 2) return
 
-    // addLearnLog({
-    //   type: 1,
-    //   id: header.id,
-    //   mediaId: audioObj.id,
-    //   learnDurationTime: gap,
-    //   learnPointTime: audioObj.currentTime,
-    // })
+    addLearnLog({
+      type: 1,
+      id: header.id,
+      mediaId: audioObj.id,
+      learnDurationTime: gap,
+      learnPointTime: audioObj.currentTime,
+    })
   }
 
   render() {
