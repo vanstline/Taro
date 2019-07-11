@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import { View, ScrollView } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtActionSheet, AtActionSheetItem } from 'taro-ui'
 import ToHtml from '../../components/WxParse'
@@ -45,6 +45,10 @@ export default class DraftList extends Component {
     }
     this.setState({ nowIndex: e, isOpened: false })
   }
+
+  handleDefault = (e) => {
+    e.preventDefault()
+  }
   render() {
     const { title } = this.$router.params
     const { list, nowIndex, isOpened } = this.state
@@ -54,7 +58,7 @@ export default class DraftList extends Component {
         <View className='title'>{list[nowIndex].name}</View>
         <View className='content'>
           {
-            list[nowIndex] && <ToHtml html={list[nowIndex].manuscriptContent} />
+            list[nowIndex] && <ToHtml html={list[nowIndex]?(list[nowIndex].manuscriptContent||''):''} />
           }
         </View>
         <View className={`footer ${this.props.system.paddinBottom && 'paddingBottom'}`}>
@@ -63,9 +67,11 @@ export default class DraftList extends Component {
           <View onClick={() => this.handleTrunPage(nowIndex+1)}>下一章</View>
         </View>
         <AtActionSheet isOpened={isOpened} cancelText='取消' title={title}>
-          {
-            list.map( (item, i) => <AtActionSheetItem key={item.id} className='text-left' onClick={() => this.handleTrunPage(i)}>{item.name}</AtActionSheetItem> )
-          }
+          <ScrollView className='at-action-sheet-item-wrap' scrollY={true} onScroll={this.handleDefault}>
+            {
+              list.map( (item, i) => <AtActionSheetItem key={item.id} className='text-left' onClick={() => this.handleTrunPage(i)}>{item.name}</AtActionSheetItem> )
+            }
+          </ScrollView>
         </AtActionSheet>
       </View>
     )

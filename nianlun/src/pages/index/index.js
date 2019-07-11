@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
-import { AtButton, AtRate,AtProgress } from 'taro-ui'
+import { AtButton, AtRate,AtProgress,AtIcon } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import pageInit from '../pageInit'
 // import request from '@@/services/request'
@@ -11,8 +11,11 @@ import {myBookCourseListPage,
   myBookDeskListPage,
   queryActivityPage} from '../../services/studyroom';
 import {
-  getUserInfo
+  getUserInfo,
+  isUserPromoted,
 } from '../../services/user';
+const noBook = `${Taro.IMG_URL}/no-book.png`
+const noClass = `${Taro.IMG_URL}/no-class.png`
 import './index.scss'
 
 @connect(({ counter, user }) => ({
@@ -34,6 +37,7 @@ class Index extends Component {
       myBookDeskLen:3,
       myBookCourseLen:3,
       activity:[],
+      userPromoted:{}
     }
   }
 
@@ -61,7 +65,8 @@ class Index extends Component {
       getUserInfo(),
       myBookCourseListPage(),
       myBookDeskListPage(),
-      queryActivityPage()
+      queryActivityPage(),
+      // isUserPromoted()
     ])
       .then( resArr => {
         this.setState({
@@ -69,8 +74,13 @@ class Index extends Component {
           myBookCourse: resArr[1].data.data || {},
           myBookDesk: resArr[2].data.data || {},
           activity: resArr[3].data.data.list || [],
-          isBindPhone: resArr[0].data.data.mobile ? true : false
+          isBindPhone: resArr[0].data.data.mobile ? true : false,
+          // userPromoted:resArr[4].data.data || {}
         })
+        const userPromoted = {}//resArr[4].data.data;
+        // if(userPromoted){
+        //   Taro.navigateTo({ url: `/pages/upgrade/index` })
+        // }
       } )
   }
   //  1 课程 2书桌
@@ -118,6 +128,9 @@ class Index extends Component {
   handleToActivity =()=>{
     Taro.navigateTo({ url: `/pages/activity/index` })
   }
+  handleToSchool =()=>{
+    Taro.switchTab({ url: `/pages/school/index` })
+  }
   handleToActivityDetail = (id) => {
     Taro.navigateTo({ url: `/pages/activity/detail?id=${id}&tab=1` })
   }
@@ -137,7 +150,7 @@ class Index extends Component {
   }
   
   render () {
-    const { rate,userInfo,myBookCourse,myBookDesk,myBookCourseLen,myBookDeskLen, nowRate,activity } = this.state
+    const { rate,userInfo,myBookCourse={},myBookDesk={},myBookCourseLen,myBookDeskLen, nowRate,activity } = this.state
     const { mobile } = this.props
     return (
       <View className='index'>
@@ -197,7 +210,12 @@ class Index extends Component {
               </MyGraphic>
             </View>))
             }
-            
+            {
+              (myBookCourse.list&&myBookCourse.list.length ===0) &&<View className="list-no-data" onClick={this.handleToSchool.bind(this)}>
+                <View><Image style={{width:'118px',height:'84px'}} src={noClass}/></View>
+                <Text>还没上过课哦，去看看 >></Text>
+              </View>
+            }
             {myBookCourse.total>3&&<View className='btn'>{myBookCourseLen===3?<View className='sub-btn' onClick={this.handleUnfold.bind(this,1,false)}>展开所有</View>:<View className='sub-btn' onClick={this.handleUnfold.bind(this,1,true)}>收起</View>}</View>}
             
           </MyCard>
@@ -221,10 +239,16 @@ class Index extends Component {
               </MyGraphic>
             </View>)
             }
+            {
+              (myBookDesk.list&&myBookDesk.list.length ===0) &&<View className="list-no-data" onClick={this.handleToSchool.bind(this)}>
+                <View><Image src={noBook} style={{width:'116px',height:'79px'}}/></View>
+                <Text>还没翻过书，去看看 >></Text>
+              </View>
+            }
             {myBookDesk.total>3&&<View className='btn'>{myBookDeskLen===3?<View className='sub-btn' onClick={this.handleUnfold.bind(this,2,false)}>展开所有</View>:<View className='sub-btn' onClick={this.handleUnfold.bind(this,2,true)}>收起</View>}</View>}
           </MyCard>
           <WhiteSpace />
-          <MyCard title='年轮活动' extra='更多' extraClick={this.handleToActivity}>
+          {activity.length>0 &&<MyCard title='年轮活动' extra='更多' extraClick={this.handleToActivity}>
             {
               activity.map((item,index)=>(index===0&&<View key={index+''} onClick={this.handleToActivityDetail.bind(this,item.id)} className='actives' style={{paddingTop: '16px'}}>
               <Image src={item.activityCover}/>
@@ -240,7 +264,7 @@ class Index extends Component {
 
             }
             
-          </MyCard>
+          </MyCard>}
         </View>
       </View>
     )

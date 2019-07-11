@@ -1,8 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui"
 import { View, Text, ScrollView } from '@tarojs/components'
 import Empty from './components/empty'
 import api from '../../services/api'
 import { Host } from '../../services/config'
+import { showToast } from '../../utils/utils'
 import './index.scss'
 
 export default class Message extends Component {
@@ -13,6 +15,8 @@ export default class Message extends Component {
       pageIndex: 0,
       lastPage: 1,
       pageSize: 20,
+      isOpened:false,
+      AtModalData:{},
       list: [],
       noMore: false,
     }
@@ -53,19 +57,32 @@ export default class Message extends Component {
   }
 
   onClick = async (item) => {
+    
     const response = await api.post(`${Host}/personalcenter/changeUserNotificationStatus`, { id: item.id });
     if (response.data.returnCode === 0) {
       if (item.linkUrl) {
         Taro.navigateTo({
           url:item.linkUrl
         })
+      }else{
+        // Taro.showModal({
+        //   title: item.title,
+        //   content: item.notifyBody,
+        //   showCancel: false,
+        //   confirmText:'知道了',
+        //   success: function(res) {},
+        // });
+        this.setState({AtModalData:{
+          title: item.title,
+          content: item.notifyBody
+        }},()=>this.setState({isOpened:true}))
       }
     }
   }
 
   render() {
 
-    const { list, noMore } = this.state
+    const { list, noMore,isOpened,AtModalData } = this.state
 
     return (
       <View className='message-wrap'>
@@ -76,8 +93,11 @@ export default class Message extends Component {
           </View> : <ScrollView
             className='scroll-view'
             scrollY
-            enableBackToTop
-            lowerThreshold={50}
+            scrollTop={0}
+            // enableBackToTop
+            scrollWithAnimation
+            lowerThreshold={20}
+            upperThreshold={20}
             onScrollToLower={this.onScroll}
           >
             {
@@ -99,6 +119,14 @@ export default class Message extends Component {
         {
           noMore && <View className='no-more-message'>无更多数据</View>
         }
+        <AtModal isOpened={isOpened}>
+          <AtModalHeader>{AtModalData.title}</AtModalHeader>
+          <AtModalContent>
+            <View className='force-list-item'>{AtModalData.content}</View>
+           
+          </AtModalContent>
+          <AtModalAction> <Button onClick={() => this.setState({isOpened: false})}>确定</Button> </AtModalAction>
+        </AtModal>
       </View>
     )
   }

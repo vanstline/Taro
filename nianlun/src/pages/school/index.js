@@ -18,6 +18,7 @@ import { queryAdvertising,
   queryContentDailyList,
   queryBookCommendPageList,
   queryCourseQualityPageList,
+  addClickLog,
   queryBookCourseAllList, queryBookCourseList, queryCategoryList, queryContentCategoryList, queryNewBookCourseList } from '../../services/school'
   import { getUserInfo } from '../../services/user';
 import { bindMobile } from '../../services/mine'
@@ -60,7 +61,7 @@ class School extends Component {
     }
   }
   config = {
-    navigationBarTitleText: '年轮学堂',
+    navigationBarTitleText: '识践串串',
     comment: true
   }  
 
@@ -154,6 +155,11 @@ class School extends Component {
     }=res.data.data||{}
     this.setState({ bookCommendData:res.data.data,bookCommend: list,bookCommendTotal:total,pageIndex:++pageIndex })
   }
+  // type 1、类目2、每日新知 3 最新上新
+  async addClickLog(type,id) {
+    
+    id && await addClickLog({type,id})
+  }
   handleBooks = () => {
     Taro.navigateTo({
       url: '/pages/media/index'
@@ -162,13 +168,17 @@ class School extends Component {
   // 列表页
   handleToList (i) {
     console.log(i)
+    this.addClickLog(1,i.id)
     Taro.navigateTo({
       url: `/pages/list/index?type=${i.type}&title=${i.name}&id=${i.id}&code=${i.code||''}`
     })
   }
   // 详情页 1书 2课
-  handleToDetail (type=1,id,chapterId) {
+  handleToDetail (type=1,id,chapterId,addClickId) {
     let flag = isNaN(chapterId)
+    if(addClickId){
+      this.addClickLog(3,addClickId)
+    }
     if(type===1){
       Taro.navigateTo({
         url: `/pages/detailsBook/index?id=${id}`
@@ -188,6 +198,7 @@ class School extends Component {
     // this.setState({
     //   isOpen:true
     // })
+    this.addClickLog(2,item.id)
     this.handleToDetail(item.type,item.fkId||item.id, item.chapterId || 0)
   }
   
@@ -213,109 +224,134 @@ class School extends Component {
       hasLoad,
       isPlayOpen,
       isOpen } = this.state
-    console.log('hasLoad',hasLoad)
     return (
       <Page full className='school'>  
-     
+      {/* <View > */}
         {/* <NavBar isTab tabText={tabText[1]}/> */}
         <View className='header'>
-          <View className='banner'><MySwiper bannerList={banner} /></View>
-          <View className='class-subject'>
-            {
-              subjects && subjects.map( (item) => {
-                return (
-                  <View key={item.id} 
-                    className='subject-items' 
-                    style={{ backgroundImage: `url(${item.banner||background})` }}
-                    onClick={this.handleToList.bind(this,item)}
-                  >{item.name}</View>
-                )
-              } )
-            }
-          </View>
+          {
+            banner && banner.length && <View className='banner'><MySwiper autoplay={true} bannerList={banner} style={{ borderRadius: '8px' }} /></View>
+          }
+          {
+            subjects && subjects.length && (
+              <View className='class-subject'>
+                {
+                  subjects && subjects.map( (item) => {
+                    return (
+                      <View key={item.id} 
+                        className='subject-items' 
+                        style={{ backgroundImage: `url(${item.banner||background})` }}
+                        onClick={this.handleToList.bind(this,item)}
+                      >{item.name}</View>
+                    )
+                  } )
+                }
+              </View>
+            )
+          }
+          
         </View>
         <View className='content' style={{paddingBottom:isPlayOpen?'95px':'0px'}} >
-          <MyCard title='每日新知小餐'>
-            <View className='xiaocan'>
-              {
-                contentDaily.map( (item, i) => {
-                  // TODO:
-                  const medias = item.medias?(item.medias).split(','):[]
-                  return (<View className='xiaocan-items' key={i+''} onClick={this.handleToPlay.bind(this,item)} > 
-                    
-                  <View className="xiaocan-left">
+          {
+            contentDaily && contentDaily.length && (
+              <MyCard title='每日新知'>
+                <View className='xiaocan'>
                   {
-                    medias.map((media,index)=>(<AtTag key={index+''}>{media}</AtTag>))
+                    contentDaily.map( (item, i) => {
+                      const medias = item.medias?(item.medias).split(','):[]
+                      return (<View className='xiaocan-items' key={i+''} onClick={this.handleToPlay.bind(this,item)} > 
+                        
+                      <View className="xiaocan-left">
+                      {
+                        medias.map((media,index)=>(<AtTag key={index+''}>{media}</AtTag>))
+                      }
+                      <View className="xiaocan-title">{item.title}</View>
+                      </View>
+                      <Image src={playIcon}/>
+                    </View>)
+                    } )
                   }
-                  <View className="xiaocan-title">{item.title}</View>
+                </View>
+              </MyCard>
+
+            )
+          }
+          <WhiteSpace />
+          {
+            newLists && newLists.length && (
+              <MyCard title='最新上新'>
+                <View className='news'>
+                  <View className='main' onClick={this.handleToDetail.bind(this,2,newLists[0].bookCourseId, newLists[0].bookCourseChapterId,newLists[0].id)}>
+                    <Image src={newLists[0].imgMain || ''} />
+                    <View className="text text-first">
+                      <View className='title'>{newLists[0].chapterName || ''}</View>
+                      {/* <View className='describe'>{newLists[0].title || ''}</View> */}
+                    </View>
                   </View>
-                  <Image src={playIcon}/>
-                </View>)
-                } )
+                  <View className='side'>
+                    <View className="item" onClick={this.handleToDetail.bind(this,2,newLists[1].bookCourseId, newLists[1].bookCourseChapterId,newLists[0].id)}>
+                      <Image src={newLists[1].imgMain || ''} />
+                      <View className="text">
+                        <View className='title'>{newLists[1].chapterName || ''}</View>
+                        {/* <View className='describe'>{newLists[1].title || ''}</View> */}
+                      </View>
+                    </View>
+                    
+                    <View className="item" onClick={this.handleToDetail.bind(this,2,newLists[2].bookCourseId, newLists[2].bookCourseChapterId,newLists[0].id)}>
+                      <Image src={newLists[2].imgMain || ''} />
+                      <View className="text">
+                        <View className='title'>{newLists[2].chapterName || ''}</View>
+                        {/* <View className='describe'>{newLists[2].title || ''}</View> */}
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </MyCard>
+            )
+          }
+          <WhiteSpace />
+          {
+            courseQuality && courseQuality.length && (
+            <MyCard title='精选产品'>
+              <View style={{ height: '24px' }} />
+              {
+                courseQuality.map((item,i)=>(<View className='books' style={{ paddingBottom: '24px' }} key={i+''} onClick={this.handleToDetail.bind(this,2,item.bookCourseId)} ><MyGraphic isNew={item.latest?true:false} img={item.imgMain} title={item.title}>
+                <View className="graphic-describe">
+                  <View className='graphic-content'>{item.commendDesc}</View>
+                  <View className='graphic-button'>
+                    <View>{item.finished ?<Text>已完结 共{item.updatedChapters}期</Text>:<Text>更至{item.updatedChapters}期</Text>}
+                    
+                    <Text style={{ paddingLeft: '16px' }}>{item.studyNum}人学习</Text></View>
+                    <Text className="graphic-learn">学习</Text>
+                  </View>
+                </View>
+              </MyGraphic></View>))
               }
-            </View>
-          </MyCard>
+            </MyCard>
+            )
+          }
           <WhiteSpace />
-          <MyCard title='最新上新'>
-            <View className='news'>
-              <View className='main' onClick={this.handleToDetail.bind(this,2,newLists[0].bookCourseId, newLists[0].bookCourseChapterId)}>
-                <Image src={newLists[0].imgMain || ''} />
-                <View className="text text-first">
-                  <View className='title'>{newLists[0].chapterName || ''}</View>
-                  <View className='describe'>{newLists[0].title || ''}</View>
-                </View>
-              </View>
-              <View className='side'>
-                <View className="item" onClick={this.handleToDetail.bind(this,2,newLists[1].bookCourseId, newLists[1].bookCourseChapterId)}>
-                  <Image src={newLists[1].imgMain || ''} />
-                  <View className="text">
-                    <View className='title'>{newLists[1].chapterName || ''}</View>
-                    <View className='describe'>{newLists[1].title || ''}</View>
+          {
+            bookCommend && bookCommend.length && (
+            <MyCard title='好书推荐' extra="查看更多" extraClick={this.handleToList.bind(this,{type:1,name:'图书馆',id:33,code:'LIBRARY'})}>
+              <View style={{ height: '24px' }} />
+              <View className='books' >
+              {
+                bookCommend.map((item,i)=>(<View key={i+''} onClick={this.handleToDetail.bind(this,1,item.bookId)} style={{ paddingBottom: '24px' }}><MyGraphic img={item.imgMain} title={item.bookTitle} >
+                <View className="graphic-describe">
+                  <View className='graphic-content'>{item.commendTitle}</View>
+                  <View className='graphic-button'>
+                    <View>{item.studyNum}人学习</View>
+                    <Text className="graphic-learn">学习</Text>
                   </View>
                 </View>
-                
-                <View className="item" onClick={this.handleToDetail.bind(this,2,newLists[2].bookCourseId, newLists[2].bookCourseChapterId)}>
-                  <Image src={newLists[2].imgMain || ''} />
-                  <View className="text">
-                    <View className='title'>{newLists[2].chapterName || ''}</View>
-                    <View className='describe'>{newLists[2].title || ''}</View>
-                  </View>
+              </MyGraphic></View>))
+              }
                 </View>
-              </View>
-            </View>
-          </MyCard>
-          <WhiteSpace />
-          <MyCard title='精选课程'>
-            <View style={{ height: '24px' }} />
-            {
-              courseQuality.map((item,i)=>(<View className='books' style={{ paddingBottom: '24px' }} key={i+''} onClick={this.handleToDetail.bind(this,2,item.bookCourseId)} ><MyGraphic isNew={item.latest?true:false} img={item.imgMain} title={item.title}>
-              <View className="graphic-describe">
-                <View className='graphic-content'>{item.commendDesc}</View>
-                <View className='graphic-button'>
-                  <Text>更新至{item.updatedChapters}期</Text>
-                  <Text style={{ paddingLeft: '16px' }}>{item.studyNum}人学习</Text>
-                </View>
-              </View>
-            </MyGraphic></View>))
-            }
-          </MyCard>
-          <WhiteSpace />
-          <MyCard title='好书推荐' extra="查看更多" extraClick={this.handleToList.bind(this,{type:1,name:'图书馆',id:33,code:'LIBRARY'})}>
-            <View style={{ height: '24px' }} />
-            <View className='books' >
-            {
-              bookCommend.map((item,i)=>(<View key={i+''} onClick={this.handleToDetail.bind(this,1,item.bookId)} style={{ paddingBottom: '24px' }}><MyGraphic img={item.imgMain} title={item.bookTitle} >
-              <View className="graphic-describe">
-                <View className='graphic-content'>{item.commendTitle}</View>
-                <View className='graphic-button'>{item.studyNum}人学习</View>
-              </View>
-            </MyGraphic></View>))
-            }
-            
-              </View>
-            
-            {bookCommendData.pages>=pageIndex&&<View className='btn'><View onClick={this.handleChangeBook.bind(this)} className='sub-btn'>换一换</View></View>}
-          </MyCard>
+              {bookCommendData.pages>=pageIndex&&<View className='btn'><View onClick={this.handleChangeBook.bind(this)} className='sub-btn'>换一换</View></View>}
+            </MyCard>
+            )
+          }
           
         </View>
         <AtCurtain 
@@ -329,7 +365,7 @@ class School extends Component {
               <GetPhoneBtn title="去领取" onBtn={this.savePhone.bind(this)}  />
           </View>
         </AtCurtain>
-        
+        {/* </View > */}
       </Page>       
     )  
   }

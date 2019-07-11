@@ -45,20 +45,20 @@ export default class Catalog extends Component {
   getWidth = () => {
     const query = Taro.createSelectorQuery().in(this.$scope)
     query.select('.lesson-items-wrap').boundingClientRect().exec(res => {
-        this.setState({ rect: res[0] })
+      this.setState({ rect: res[0] })
     })
   }
 
   handleDetail = () => {
-    Taro.navigateBack()
+    Taro.navigateTo({ url: `/pages/detailsCourse/index?id=${this.props.courseDetail.id}` })
   }
 
   render() {
     const { rect } = this.state
-    const { courseDetail, currentIndex = 0 } = this.props
+    const { courseDetail={}, currentIndex = 0 } = this.props
     const { purchased, bccList = [], updatedChapters = 0, title = '' } = courseDetail
     let nowBcc = bccList ? bccList[currentIndex] : {}
-    let leftWidth = currentIndex * rect.width 
+    let leftWidth = currentIndex ? currentIndex * rect.width - rect.width/2 : 0
     
     return (
       <View className='catalog'>
@@ -68,7 +68,7 @@ export default class Catalog extends Component {
               <View >{courseDetail.title}</View>
               <View className='info'>
                 <View className='type at-col-2'>更新至{updatedChapters}期</View>
-                <View className='time at-col-4'>时长 {getTime(nowBcc.durationTime)}</View>
+                <View className='time at-col-4'>时长 {getTime(nowBcc?nowBcc.durationTime:0)}</View>
               </View>
             </View>
             <View className='btn-wrap at-col-3'>
@@ -81,6 +81,7 @@ export default class Catalog extends Component {
           <ScrollView 
             className='scroll'
             scrollX={true}
+            scrollWithAnimation
             scrollLeft={leftWidth}
           >
             {

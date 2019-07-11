@@ -10,3 +10,5 @@ export const HTTP_STATUS = {
   SERVICE_UNAVAILABLE: 503,
   GATEWAY_TIMEOUT: 504
 }
+
+export const EXPRIY_CODE = [-109, -110]

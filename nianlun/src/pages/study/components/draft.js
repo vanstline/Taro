@@ -6,12 +6,12 @@ import '../index.scss'
 
 export default class Draft extends Component {
   render() {
-    const { draft } = this.props
+    const { draft={} } = this.props
     return (
       <View className='draft'>
         {/* <MyCard title={draft.name || ''}>
           <View className='draft-content'> */}
-          <ToHtml html={draft.manuscriptContent || ''} />
+          <ToHtml html={draft.manuscriptContent || '暂无文稿'} />
           {/* </View>
         </MyCard> */}
       </View>

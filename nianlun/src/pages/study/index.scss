@@ -99,6 +99,7 @@ page {
     .scroll {
       white-space: nowrap;
       .lesson-items-wrap {
+        vertical-align: top;
         display: inline-block;
         padding: 0 $pages-padding-v3;
       }
@@ -168,6 +169,7 @@ page {
 }
 
 .draft {
+  padding: 0 $pages-padding-v4;
   padding-bottom: $footer-height;
   .draft-content {
     color: #4C4948;

@@ -48,11 +48,11 @@ page{
     -moz-osx-font-smoothing: grayscale;
   }
   .share-text {
-    background: rgba(0, 0, 0, 0.2);
-    padding: calcPx(6) calcPx(12);
+    background: #818181;
+    padding: calcPx(12);
     text-align: center;
     color: #fff;
-    font-size: calcPx(12)
+    font-size: calcPx(14)
   }
   .scroll-view {
     display: flex;

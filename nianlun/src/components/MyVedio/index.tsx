@@ -32,6 +32,7 @@ export default class MyAudio extends Component<Props, any> {
   componentDidMount() {
     let { vedioObj } = this.state
     Taro.getBackgroundAudioManager().pause()
+    this.setGlobalLog(false)
     const vedioData = Taro.getStorageSync('VEDIODATA')
     if(vedioData.mediaId === vedioObj.id) {
       vedioObj.learnPointTime = vedioData.learnPointTime || 0
@@ -45,15 +46,22 @@ export default class MyAudio extends Component<Props, any> {
   }
 
   onPause = () => {
+    this.setGlobalLog(false)
     this.t2 = parseInt(Date.now()/1000) - this.t1 + this.t2
     this.t1 = 0
   }
 
   onPlay = () => {
+    this.setGlobalLog(true)
     this.t1 = parseInt(Date.now()/1000)
   }
 
+  // 设置全局播放记录
+  setGlobalLog(bool = false) {
+    Taro.CourseVedioCtxPause = bool
+  }
   componentWillUnmount() {
+    this.setGlobalLog(false)
     this.sendLog()
   }
 
@@ -66,18 +74,25 @@ export default class MyAudio extends Component<Props, any> {
       title: header.title, 
       src: vedioObj.filePath,
       paused: vedioObj.paused,
-      learnPointTime: this.vedioCurrentTime
-    })
-    addLearnLog({
-      id: header.id,
-      type: header.type,
-      mediaId: vedioObj.id,
-      learnDurationTime: t2,
       learnPointTime: this.vedioCurrentTime,
+      chapterId: vedioObj.chapterId || '' ,
     })
+    if(t2 >= 3600 * 4) return
+    if(header.id){
+      addLearnLog({
+        id: header.id,
+        type: header.type,
+        chapterId: vedioObj.chapterId || '' ,
+        mediaId: vedioObj.id,
+        learnDurationTime: t2,
+        learnPointTime: this.vedioCurrentTime,
+      })
+    }
+    
   }
 
   handlePlayEnd = () => {
+    this.setGlobalLog(false)
     if(this.props.callback && typeof this.props.callback === 'function') {
       this.props.callback()
     }
@@ -85,6 +100,7 @@ export default class MyAudio extends Component<Props, any> {
 
   render() {
     const { vedioObj }  = this.state
+    console.log(Taro.CourseVedioCtxPause)
     return (
       <Video 
         src={vedioObj.filePath || ''} 

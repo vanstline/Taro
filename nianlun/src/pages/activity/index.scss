@@ -147,3 +147,18 @@
   }
   
 }
+
+.no-cont {
+  box-sizing: border-box;
+  padding-top: calcPx(85);
+  height: 100vh;
+  background-image: url(IMG_URL('activity_bg.png'));
+  background-size: 100% 100%;
+  > view {
+    margin: 0 auto;
+    width: calcPx(348);
+    height: calcPx(234);
+    background-image: url(IMG_URL('activity_pic.png'));
+    background-size: 100% 100%;
+  }
+}

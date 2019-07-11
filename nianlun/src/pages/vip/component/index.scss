@@ -1,9 +1,9 @@
 @import '../../../styles/variable.scss';
 
 .vip-title-container{
-  width: calcPx(311);
+  // width: calcPx(311);
   height: calcPx(109);
-  padding: calcPx(16);
+  padding: 0 calcPx(16);
   background: rgba(243,243,243,1);
   border-radius: calcPx(8);
   display: flex;

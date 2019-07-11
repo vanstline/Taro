@@ -1,7 +1,7 @@
 @import '../../styles/variable.scss';
 
 .progress-wrap {
-  padding: 0 $pages-padding-v4;
+  // padding: 0 $pages-padding-v4;
   .progress {
     position: relative;
     width: 100%;
@@ -11,7 +11,7 @@
       background: #fff;
       .bar {
         height: 4PX;
-        background: #FCCF00;
+        background: $color-brand;
       }
       .dot {
         position: absolute;
@@ -25,7 +25,7 @@
           height: 10PX;
           background: #fff;
           border-radius: 50%;
-          box-shadow: 1PX 1PX 10PX #000;
+          box-shadow: 1PX 1PX 10PX $color-brand;
         }
       }
     }

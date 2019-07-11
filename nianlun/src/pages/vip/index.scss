@@ -33,37 +33,72 @@ page {
       border-radius: $border-radius-large;
     }
   }
+  .content-wrap {
+    padding: 0 64px;
+  }
   .content{
     position: relative;
     top: calcPx(230);
-    .title-img{
+    padding-bottom: calcPx(137);
+    .title {
+      height: calcPx(28);
+      font-size: 20PX;
+      font-family: PingFangTC-Medium;
+      font-weight: 500;
       text-align: center;
-      image{
-        width: calcPx(140);
-        height: calcPx(20);
-      }
+      color: rgba(76,73,72,1);
+      line-height: calcPx(28);
+    }
+    .txt {
+      margin: 0 20px;
+    }
+    .left-icon, 
+    .right-icon {
+      display: inline-block;
+      width: calcPx(22);
+      height: calcPx(14);
+      background-size: 100% 100%;
+    }
+    .left-icon {
+      background-image: url(IMG_URL('icon_left.png'));
+    }
+    .right-icon {
+      background-image: url(IMG_URL('icon_right.png'));
+    }
+    
+    .notice {
+      margin-top: calcPx(30);
     }
     .buy-have-know{
-      width: calcPx(311);
-      height: calcPx(152);
+      // width: calcPx(311);
+      margin: 0 auto;
+      padding: calcPx(16);
+      line-height: 44px;
+      font-size: 16PX;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color: #666666;
       background: rgba(243,243,243,1);
       border-radius: calcPx(8);
-      padding: calcPx(16);
-      color: #666666;
-      margin: 0 auto;
+      .buy-have-know-2 {
+        margin-top: 20px;
+      }
     }
     .to-do-buy{
       position: fixed;
       left: 50%;
       transform: translateX(-50%);
-      bottom: 100px;
+      bottom: calcPx(46);
       width: calcPx(311);
       height: calcPx(50);
       background:linear-gradient(180deg,rgba(254,233,0,1) 0%,rgba(252,207,0,1) 100%);
       border-radius: calcPx(25);
-      margin: calcPx(40) auto;
+      font-family:PingFangSC-Medium;
+      font-weight:500;
+      margin: 0 auto;
       text-align: center;
       line-height: calcPx(50);
+      border: none;
     }
   }
 }

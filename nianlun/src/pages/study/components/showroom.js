@@ -24,7 +24,7 @@ export default class Showroom extends Component {
   }
   
   render() {
-    const { mineList, anthouerList, homeworkType } = this.props
+    const { mineList=[], anthouerList=[], homeworkType } = this.props
     return (
       <View className='showroom'>
         {

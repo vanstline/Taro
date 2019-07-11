@@ -35,7 +35,6 @@ export default class Rate extends Component<Props, any> {
   }
 
   handleTouchEnd = (e) => {
-    console.log(e)
     let nextX = this.getMoveX(e.changedTouches[0].clientX)
     this.props.onProgressChange(nextX)
   }

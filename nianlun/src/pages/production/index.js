@@ -31,21 +31,22 @@ export default class Production extends Component {
   constructor () {
     super(...arguments)
     this.state = {
-      type: this.$router.params.workType || '2',
+      type: this.$router.params.workType || '1',
       files: [],
       rect: {},
       audioUrl: '',
       timeLength: 0,
       isOpened: false,
       recordStatus: false,
+      imgLoading: false
     }
   }
 
   onChange = async (files, operationType, index) => {
-    console.log(files, operationType)
+    console.log(files, operationType, index)
     switch(operationType) {
       case 'add':
-        this.uploadImageCallback(files[0].url)
+        this.uploadImageCallback(files[files.length-1].url)
         return
       case 'remove':
         this.removeImageFile(index)
@@ -57,6 +58,7 @@ export default class Production extends Component {
 
   // 上传图片回调
   uploadImageCallback(url) {
+    this.setState({ imgLoading: true })
     base64(url)
       .then( res => {
         this.uploadFileImage(res, url )
@@ -65,7 +67,7 @@ export default class Production extends Component {
 
   // 图片添加
   async uploadFileImage(base64, fileName) {
-    console.log(base64, fileName)
+    // console.log(base64, fileName)
     base64 = encodeURIComponent(base64)
     let res = await uploadByBase64({ base64, fileName, fileCode: 'pic' })
     if(res.data.returnCode === 0) {
@@ -74,7 +76,7 @@ export default class Production extends Component {
         url: res.data.data,
         file: { path: res.data.data }
       })
-      this.setState({ files })
+      this.setState({ files, imgLoading: false })
     }
   }
 
@@ -270,7 +272,7 @@ export default class Production extends Component {
               } else {
                 //第二次才成功授权
                 console.log("设置录音授权成功");
-                that.setState({
+                _this.setState({
                   recordStatus: 2,
                 })
                 recorderManager.start(options);
@@ -302,7 +304,7 @@ export default class Production extends Component {
             // });
             
             var tempFilePath = res.tempFilePath; // 文件临时路径
-            console.log(tempFilePath, '--------tempFilePath')
+            // console.log(tempFilePath, '--------tempFilePath')
 
             var temp = tempFilePath.replace('.mp3', '') //转换格式 默认silk后缀
             // console.log(res.tempFilePath)
@@ -325,12 +327,12 @@ export default class Production extends Component {
   }
 
   async uploadFileRecord(base64, fileName) {
-    console.log(base64, fileName)
+    // console.log(base64, fileName)
     base64 = encodeURIComponent(base64)
     // fileName = 'Record-' + Date.now()
     let res = await uploadByBase64({ base64, fileName, fileCode: 'record' })
     if(res.data.returnCode === 0) {
-      console.log(res.data.data, '------录音文件')
+      // console.log(res.data.data, '------录音文件')
       this.setState({ audioUrl: res.data.data })
     }
   }
@@ -343,8 +345,13 @@ export default class Production extends Component {
     this.setState({ clickId: -1 })
   }
 
+  componentWillUnmount() {
+    clearInterval(timer2)
+    clearTimeout(timer)
+  }
+
   render () {
-    const { type, files, value, audioUrl, clickId } = this.state
+    const { type, files, value, audioUrl, clickId,  } = this.state
 
     const btnArr = [
       {id: 0, name: '很赞'},
@@ -356,7 +363,7 @@ export default class Production extends Component {
         <Input ref={ inp => this.inp = inp } value={value} onInput={this.handleChangInput} placeholder='添加作业描述……'/>
         {
           type === '1' ? (
-            <View className='image'>
+            <View className={`image ${imgLoading && 'loading'}`}>
               <AtImagePicker
                 showAddBtn={ files.length < 4 }
                 files={files}

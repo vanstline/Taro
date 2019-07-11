@@ -59,13 +59,14 @@ export default class Player extends Component {
       if(data && data.type){
         const audioList = (data.mediaList||[]).filter(item=>item.fileType===0)
         const audioData ={
-          id:data.fkId,
-            learnDurationTime:0,
-            learnPointTime:data.learnPointTime,
-            mediaId:data.mediaId,
-            src:audioList[0].filePath,
-            title:data.title,
-            type:data.type
+          id: data.fkId,
+          learnDurationTime: 0,
+          learnPointTime: data.learnPointTime,
+          mediaId: data.mediaId,
+          src: audioList[0].filePath,
+          title: data.title,
+          type: data.type,
+          chapterId: data.bookCourseChapterId
         }
         this.setState({
           audioData,
@@ -85,14 +86,18 @@ export default class Player extends Component {
     }
     
     this.props.onChange(true)
-    this.audioCtx.title = data.title||'年轮学堂'
-    this.audioCtx.epname = data.title||'年轮学堂'
-    this.audioCtx.singer = '年轮学堂'
+    const title = data.title||'识践串串'
+    this.audioCtx.title = title
+    this.audioCtx.epname = title
+    this.audioCtx.singer = '识践串串'
     // 初始化或暂停的时候
     if((this.audioCtx.paused ==undefined||this.audioCtx.paused ==true) &&data.paused!==undefined){
       if(!data.paused){
         this.audioCtx.src=data.src
-        this.audioCtx.seek((data.learnPointTime||0)+2)
+        this.audioCtx.startTime=data.learnPointTime||0
+        // 设置src后不能直接seek
+        // this.audioCtx.seek((data.learnPointTime||0)+1)
+        
       }
       this.setState({isOpen:true,isPlayer:!data.paused})
     }
@@ -100,7 +105,7 @@ export default class Player extends Component {
       Taro.audioStartTime = Date.now();
       this.setState({startTime:Date.now()},()=>this.addLearnLog())
       
-      console.log('背景音频开始播放-----',Date.now())
+      console.log('背景音频开始播放-----',Date.now(),this.audioCtx.src)
 
     })
     this.audioCtx.onStop(()=>{
@@ -123,7 +128,7 @@ export default class Player extends Component {
       endTime
     } = this.state;
     
-    const learnDurationTime = parseInt((endTime-(Taro.audioStartTime))/1000);
+    const learnDurationTime = Taro.audioStartTime ? parseInt((endTime-(Taro.audioStartTime))/1000) : 0;
     const data = {
       type: audioData.type,
       id: audioData.id,
@@ -133,14 +138,13 @@ export default class Player extends Component {
       learnDurationTime
     }
     // 播放十五秒之内不发请求 
-    if(learnDurationTime>1){
+    if(data.id&&data.learnPointTime&&learnDurationTime>1){
       // 设置本地缓存
     Taro.setStorageSync('AUDIODATA', {...data,
       title:audioData.title, 
       src:audioData.src,
       paused: this.audioCtx.paused
     });
-    
       addLearnLog(data)
     }
     
@@ -157,6 +161,7 @@ export default class Player extends Component {
       // const audio = audioList[0]
       this.audioCtx.src = audioData.src
       // 跳转的位置，单位 s audio.durationTime 
+      console.log('audioData.learnPointTime2',audioData.learnPointTime)
       this.audioCtx.seek(audioData.learnPointTime||0)
     }
   }
@@ -169,7 +174,6 @@ export default class Player extends Component {
     const {
       isPlayer
     } = this.state;
-    
     if(isPlayer) {
       this.audioCtx.pause()
       // this.addLearnLog()
@@ -184,10 +188,20 @@ export default class Player extends Component {
     }
     this.setState({isPlayer:!this.state.isPlayer})
   }
-  handleToDetail =(id)=>{
-    Taro.navigateTo({
-      url: `/pages/detailsBook/index?id=${id}`
-    })
+  // 详情页 1书 2课
+  handleToDetail (type=1,id,chapterId) {
+    let flag = isNaN(chapterId)
+    if(type===1){
+      Taro.navigateTo({
+        url: `/pages/detailsBook/index?id=${id}&tabIndex=1`
+      })
+    }else{
+      let url = `/pages/${!flag && chapterId ? 'study' : 'detailsCourse'}/index?id=${id}&chapterId=${chapterId}`
+      Taro.navigateTo({
+        url
+      })
+    }
+    
   }
   render() {
     
@@ -206,7 +220,7 @@ export default class Player extends Component {
         
         <View className='subject'>
           {!isPlayer&&<View className='close' onClick={this.handleClose.bind(this)}><Image src={closeImg}/></View>}
-          <View className='play-right' onClick={this.handleToDetail.bind(this,id)}>
+          <View className='play-right' onClick={this.handleToDetail.bind(this,audioData.type,audioData.fkId||audioData.id, audioData.chapterId || 0)}>
             <View className={`cover`} ><Image src={poster}/></View>
             <View className='subject-right'>
             <View className='status'>正在播放</View>

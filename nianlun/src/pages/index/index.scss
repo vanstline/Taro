@@ -126,7 +126,15 @@
 .content {
   padding-top: $pages-padding-v4;
   background: $pages-banner-background-color;
-
+  .list-no-data {
+    text-align: center;
+    text {
+      color: #777299;
+      width: 100%;
+      
+      font-weight:500;
+    }
+  }
   .actives {
     image {
       width: 100%;

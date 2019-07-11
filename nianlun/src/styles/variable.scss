@@ -1,3 +1,4 @@
+$color-brand: #FCCF00;
 $max-index: 1000;
 $skeleton-index: $max-index - 3;
 $skeleton-item-index: $skeleton-index + 2;
@@ -97,7 +98,7 @@ $footer-height: 100px;
 $line-height: 1.6;
 
 @function IMG_URL($url) {
-  @return 'https://nianlun-static.oss-cn-hangzhou.aliyuncs.com/assets/' + $url;
+  @return 'https://static.nianlunxt.top/assets/' + $url;
 }
 
 @function calcPx($px) {

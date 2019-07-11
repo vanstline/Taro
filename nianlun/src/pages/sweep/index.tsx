@@ -27,25 +27,9 @@ export default class Sweep extends Taro.Component {
     }
   }
 
-  // // // 授权
-  // tobegin = (res) => {    
-  //   const { errMsg, encryptedData, iv } = res.detail
-  //   const _this = this
-  //   if(errMsg === 'getPhoneNumber:ok') {
-  //     let openId = Taro.getStorageSync('code2Session').openid
-  //     let obj = { openId, encryptedData, iv, ifGive7Days: 1 }
-  //     bindMobile(obj)
-  //       .then( res => {
-  //         if(res.data.returnCode === 0) {
-  //           showToast('绑定成功， 正在激活中请稍后')
-  //           this.handleSweep()
-  //         }
-  //       } )
-  //   }
-  // } 
 
   config = {
-    navigationBarTitleText: '年轮学堂',
+    navigationBarTitleText: '识践串串',
   }
 
   onClose = () => {
@@ -110,14 +94,6 @@ export default class Sweep extends Taro.Component {
                   已成功领取该卡片，激活后可免费解 锁所有课程和书籍，是否立即激活？
                 </View>
                 <View className='btn'>
-                  {/* {
-                    user.mobile
-                    ? <AtButton size='small' onClick={this.handleSweep} >立即激活</AtButton>
-                    : <AtButton size='small' 
-                        openType="getPhoneNumber" 
-                        onGetPhoneNumber={this.tobegin}
-                      >立即激活</AtButton>
-                  } */}
                   <GetPhoneBtn size='small' onBtn={this.handleSweep.bind(this)} title='立即激活'/>
                 </View>
               </View>

@@ -23,6 +23,7 @@ const service = `${Taro.IMG_URL}/service.png`
 const activationCode = `${Taro.IMG_URL}/activationCode.png`
 const myOrder = `${Taro.IMG_URL}/myOrder.png`
 
+
 const { tabText } = global.common
 
 const pagesArr = ['message', 'award', 'force', 'livehand']
@@ -34,7 +35,8 @@ class Mine extends Component {
     super(props);
     this.state = {
       info: {},
-      isOpened: false
+      isOpened: false,
+      isInvited: false,
     }
   }
 
@@ -48,8 +50,11 @@ class Mine extends Component {
     const response = await api.post(`${Host}/personalcenter/getPersonalCenterBaseInfo`)
     if (response.data.returnCode === 0) {
       // response.data.data.headImg ='https://test-nianlun-static.oss-cn-hangzhou.aliyuncs.com/avatar_default.jpg'
+      
+      let isInvited = response.header['x-app-ver-check'] === 'false' ? true : false
       this.setState({
         info: response.data.data,
+        isInvited
       })
     }
   }
@@ -86,6 +91,11 @@ class Mine extends Component {
   handleToUserinfo = (page) => {
     Taro.navigateTo({
       url: `/pages/userInfo/password`
+    })
+  }
+  handleToQuestion = () => {
+    Taro.navigateTo({
+      url: `/pages/h5Static/question`
     })
   }
   
@@ -125,19 +135,22 @@ class Mine extends Component {
             
             <View className='info'>
               <View>
-                <Text>{info.nickname}</Text> <Text className='vip-type'>{this.returnVip(info.memberType)}</Text>
+                <Text onClick={this.handleToPage.bind(this, 'userInfo')}>{info.nickname}</Text> <Text className='vip-type'>{this.returnVip(info.memberType)}</Text>
               </View>
               {info.cardEndDate ? <View className='expire'>{info.cardEndDate} 到期 </View> : ''}
             </View>
-            
-              <View className='member-btn'>
-                <AtButton size='small' onClick={this.handleToPage.bind(this, 'vip')}>{info.memberType==3?'开通会员':'续费会员'}</AtButton>
-                <AtIcon value='chevron-right' color='#fff' />
-              </View>
+            {
+              this.state.isInvited && (
+                <View className='member-btn'>
+                  <AtButton size='small' onClick={this.handleToPage.bind(this, 'vip')}>{info.memberType==3?'开通会员':'续费会员'}</AtButton>
+                  <AtIcon value='chevron-right' color='#fff' />
+                </View>
+              )
+            }
             
           </View>
           <View className='share-invite'>
-            <View onClick={() => this.shareToFriends(1, info.shareGetDays, info.nickname, info.headImg)} className='share'>
+            <View onClick={() => this.shareToFriends(1, 7, info.nickname, info.headImg)} className='share'>
               <View className='icon'><Image src={share} /></View>
               <View className='txt'>
                 <View>分享给好友</View>
@@ -148,7 +161,7 @@ class Mine extends Component {
             <View onClick={() => this.shareToFriends(2, info.inviteGetDays, info.nickname, info.headImg)} className='invite'>
               <View className='icon'><Image src={invite} /></View>
               <View className='txt'>
-                <View>邀请好友付费</View>
+                <View>邀请好友</View>
                 <View className='dec'>立即得到<Text className='date'>{info.inviteGetDays || 0}天</Text>会期</View>
               </View>
             </View>
@@ -167,10 +180,10 @@ class Mine extends Component {
           <View className='info-list'>
             <AtList hasBorder={false}>
               <AtListItem title='我的书童' thumb={helper} arrow='right' onClick={this.handleToPage.bind(this, pagesArr[3])} />
-              <AtListItem title='常见问题' thumb={issue} arrow='right' />
+              <AtListItem title='常见问题' thumb={issue} arrow='right' onClick={this.handleToQuestion} />
               <AtListItem onClick={() => {
-                Taro.setClipboardData({
-                  data: '400-888-2130',
+                Taro.makePhoneCall({
+                  phoneNumber: '400-888-2130',
                 })
               }} className="info-service" title='客服电话 400-888-2130' thumb={service} />
             </AtList>

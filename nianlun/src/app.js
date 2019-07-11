@@ -13,7 +13,6 @@ import './styles/app.scss'
 import './styles/icon.scss'
 
 
-console.log(global, '---------app')
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
@@ -33,7 +32,6 @@ class App extends Component {
     pages: [
       // 'pages/production/index',
       
-      // 'pages/ambassador/index',
       'pages/login/index',
       'pages/school/index',
       'pages/index/index',
@@ -66,16 +64,17 @@ class App extends Component {
       'pages/userInfo/update',
       'pages/userInfo/updateGender',
       'pages/sweep/index',
-      
-      
+      'pages/h5Static/index',
+      'pages/h5Static/question',
+      'pages/h5Static/addWecaht',
+      'pages/common/receiveMember/receiveMember',
 
-      
     ],
     component: true,
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: 'white',
-      navigationBarTitleText: '自习室',
+      navigationBarTitleText: '拼命加载中...',
       navigationBarTextStyle: 'black',
       // navigationStyle: 'custom',
     },
@@ -113,7 +112,6 @@ class App extends Component {
   }
 
   componentWillMount() {
-    // console.log(this.$router, '----------router')
     const scene = this.$router.params.scene
     if(scene && scene != 1001) {
       Taro.__nianlun_scene = this.$router.params
@@ -121,12 +119,11 @@ class App extends Component {
   }
 
   componentDidMount () {
+
     Taro.$store = store;
-    // this.props.getStartBarHeight()
     let _this = this
     Taro.getSystemInfo({
       success(res) {
-        console.log(res, '--------是苹果手机')
         if(res.system.indexOf('iOS') !== -1 ) {
           _this.props.is_IOS()
         }

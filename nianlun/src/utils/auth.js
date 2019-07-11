@@ -80,6 +80,7 @@ export default class Auth {
 //授权用户 token
 export async function getAuthToken(){
   // login
+  const __nianlun_scene = Taro.__nianlun_scene
   let res = await Taro.login();
   let appid = global.common.appid
   let data = {
@@ -87,6 +88,10 @@ export async function getAuthToken(){
     js_code: res.code,
     client_id: 'admin',
     client_secret: 'admin',
+  }
+  if(__nianlun_scene) {
+    data._uid = __nianlun_scene.uid || ''
+    data._did = __nianlun_scene.did || ''
   }
   const option = {
     url: `${Host}/oauth/wechat/miniprogram` ,

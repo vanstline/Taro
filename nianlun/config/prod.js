@@ -1,6 +1,9 @@
+const Host = require('./host')
+
 module.exports = {
   env: {
     NODE_ENV: '"production"',
+    Host: Host[process.env.NODE_ENV],
     IMG_URL: '://nianlun-static.oss-cn-hangzhou.aliyuncs.com'
   },
   defineConstants: {

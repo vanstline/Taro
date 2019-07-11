@@ -6,7 +6,7 @@ page {
 
 .livehand {
   height: 100vh;
-  background: url('https://nianlun-static.oss-cn-hangzhou.aliyuncs.com/assets/livehand-bg.png') no-repeat center center;
+  background: url(IMG_URL('livehand-bg.png')) no-repeat center center;
   background-size: cover;
   .image-container {
     width: 100%;

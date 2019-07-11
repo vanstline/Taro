@@ -1,9 +1,9 @@
 import Taro from '@tarojs/taro'
-import { HTTP_STATUS } from './constants'
+import { HTTP_STATUS, EXPRIY_CODE } from './constants'
 import { logError } from '../utils/logError'
 import { sign } from '../utils/utils'
 
-
+// const expiryCode = [-109, -110]
 // const token = 'bearer Authorization'
 export default {
 
@@ -13,7 +13,13 @@ export default {
     let contentTypeFormData = 'application/x-www-form-urlencoded'
     let contentTypeJSON = 'application/json;charset=UTF-8'
     let contentType = params.contentType ? contentTypeJSON : contentTypeFormData
-    let header = { 'content-type': contentType, 'Authorization': token, ...extraHeader }
+    let header = { 
+      'content-type': contentType, 
+      'x-app-ver-code': global.common.versions, 
+      'Authorization': token, 
+      ...extraHeader 
+    }
+    Taro.showLoading()
     const option = {
       isShowLoading: false,
       loadingText: '正在加载',
@@ -22,7 +28,8 @@ export default {
       method: method,
       header,
       success(res) {
-        if(res.data.returnCode === -110) {
+        Taro.hideLoading()
+        if(EXPRIY_CODE.includes(res.data.returnCode) || res.data.error ==='invalid_token') {
           Taro.clearStorageSync()
           Taro.redirectTo({ url: '/pages/login/index' })
           return
@@ -35,10 +42,6 @@ export default {
           return logError('api', '没有权限访问')
         } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
           if(res.data.returnCode !== 0) {
-            console.log(res.data)
-            if(res.data.error ==='invalid_token'){
-              Taro.clearStorageSync();
-            }
             return logError('api', res.data.returnMsg ? res.data.returnMsg : '请求接口出现问题')
           }
           return res.data

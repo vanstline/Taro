@@ -18,6 +18,9 @@
   .play-right {
     display: flex;
     padding-left: 32px;
+    height: 100%;
+    padding-top: 40px;
+    flex: 1;
   }
   .close {
     width: 48px;
@@ -29,6 +32,7 @@
     height: 100%;
     display: flex;
     align-items: center;
+    width: 85%;
     .cover {
       width: 76px;
       height: 76px;
@@ -40,6 +44,13 @@
       padding-left: 24px;
       .status {
         font-size: 24px;
+      }
+      .title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;   //行数为2
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

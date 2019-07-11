@@ -52,6 +52,23 @@ export default class Order extends Component<any, any> {
     } )
   }
 
+  // 详情页 1书 2课
+  handleToDetail (type=1,id,chapterId) {
+    let flag = isNaN(chapterId)
+    if(type===1){
+      Taro.navigateTo({
+        url: `/pages/detailsBook/index?id=${id}`
+      })
+    }else{
+      let url = `/pages/${!flag && chapterId ? 'study' : 'detailsCourse'}/index?id=${id}&chapterId=${chapterId}`
+      Taro.navigateTo({
+        // url: `/pages/detailsCourse/index?id=${id}&chapterId=${chapterId}`
+        // url: `/pages/study/index?id=${id}&chapterId=${chapterId}`
+        url
+      })
+    }
+    
+  }
   render() {
     const { list = [] } = this.state
     return (
@@ -59,6 +76,10 @@ export default class Order extends Component<any, any> {
         {
           list && list.map( item => {
             const pirce = Numeral(item.dtlList[0].amount/100).format('0, 0.00')
+            const {
+              id,
+              type
+            } =(item &&item.dtlList)?item.dtlList[0] ||{}:{}
             return (
               <View>
                 <WhiteSpace />
@@ -73,7 +94,7 @@ export default class Order extends Component<any, any> {
                   </View>
                   <View className='order-footer'>
                     <View className='out-of-pocket'>实付款：<Text>￥{pirce}</Text></View>
-                    <View className='to-study'>去学习</View>
+                    <View className='to-study' onClick={this.handleToDetail.bind(this,type,id)}>去学习</View>
                   </View>
                 </View>
               </View>

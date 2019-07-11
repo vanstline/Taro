@@ -53,4 +53,8 @@ export const queryContentDailyList = (data) => {
 export const addLearnLog =  async(data) => {
   return await api.post(`${Host}/school/addLearnLog`, { ...data })
 }
+// 点击日志
+export const addClickLog =  async(data) => {
+  return await api.post(`${Host}/school/addClickLog`, { ...data })
+}
 

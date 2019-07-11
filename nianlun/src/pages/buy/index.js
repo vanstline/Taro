@@ -135,7 +135,7 @@ export default class Buy extends Taro.Component {
           {/* <Button className='buy-lesson' onClick={() => this.handleBuy(0)}>购买课程</Button>
           <Button className='buy-member' onClick={() => this.handleBuy(1)}>开通会员</Button> */}
           <GetPhoneBtn fullName='buy-lesson' title="购买课程" onBtn={() => this.handleBuy(0)}  />
-          <GetPhoneBtn fullName='buy-member' title="购买课程" onBtn={() => this.handleBuy(1)}  />
+          <GetPhoneBtn fullName='buy-member' title="购买会员" onBtn={() => this.handleBuy(1)}  />
           <View className='buy-info'>开通会员后可免费观看所有课程</View>
         </View>
         <AtModal

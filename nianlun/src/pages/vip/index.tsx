@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 // import { connect } from '@tarojs/redux'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import Numeral from 'numeral';
 import connect from '../../connect/user'
 import { AtModal, AtButton } from 'taro-ui'
@@ -54,7 +54,7 @@ export default class Vip extends Component <any, any>{
 
   componentDidMount() {
     Taro.setNavigationBarTitle({
-      title: '年轮学堂会员卡'
+      title: '识践串串会员卡'
     })
     console.log(2131)
     // this.props.dispatch(getMessageListAsync({}))
@@ -79,23 +79,6 @@ export default class Vip extends Component <any, any>{
       }
     })
   }
-
-  // // 授权
-  // tobegin = (res) => {    
-  //   const { errMsg, encryptedData, iv } = res.detail
-  //   const _this = this
-  //   if(errMsg === 'getPhoneNumber:ok') {
-  //     let openId = Taro.getStorageSync('code2Session').openid
-  //     let obj = { openId, encryptedData, iv, ifGive7Days: 1 }
-  //     bindMobile(obj)
-  //       .then( res => {
-  //         if(res.data.returnCode === 0) {
-  //           // showToast('绑定成功， 正在激活中请稍后')
-  //           this.handleToBindPhone()
-  //         }
-  //       } )
-  //   }
-  // }
 
   // 支付
   async fetchBookCourseOrder () {
@@ -150,11 +133,11 @@ export default class Vip extends Component <any, any>{
   }
 
   render() {
-    const { cardList, current } = this.state
+    const { cardList=[], current } = this.state
     const { user:  { mobile } } = this.props
     const { system } = this.props
     let bannerList = cardList.map( item => ({id: item.cardTypeId ,mediaPath: item.imgCover}) )
-    let price = system.IOS ? cardList[current].iosPrice : cardList[current].price
+    let price = cardList[current]?(system.IOS ? cardList[current].iosPrice : cardList[current].price):0
     return(
       <View className='vip'>
         <View className='header'>
@@ -164,72 +147,61 @@ export default class Vip extends Component <any, any>{
             <MySwiper 
               bannerList={bannerList} 
               onCallback={this.handleCheckCard.bind(this)}
+              height={ '170px' }
             />
           </View>
           
         </View>
-        <View className="content">
-          <View className='title-img'>
-            <Image src={vipTitle1}/>
+        <View className='content-wrap'>
+          <View className="content">
+            <View className='title'>
+              <Text className='left-icon' />
+              <Text className='txt'>会员权益</Text>
+              <Text className='right-icon' />
+            </View>
+            <WhiteSpace size='xs'/>
+            <Title 
+              icon={icon1}
+              title='健康栏目'
+              content='由知名医学专家倾情打造，每周5期音频畅听'
+            />
+            <WhiteSpace size='sm'/>
+            <Title 
+              icon={icon2}
+              title='书籍解读'
+              content='经典书籍图文、音频、视频解读（非电子版原著）'
+            />
+            <WhiteSpace size='sm'/>
+            <Title 
+              icon={icon3}
+              title='兴趣课程'
+              content='英语、法律、朗诵、书法……各类精品课程免费畅学'
+            />
+            <WhiteSpace size='sm'/>
+            <Title 
+              icon={icon4}
+              title='线上社群'
+              content='基于兴趣课的专属社群，交流互动更方便'
+            />
+            <WhiteSpace size='sm'/>
+            <Title 
+              icon={icon5}
+              title='线下活动'
+              content='优享授权点组织的丰富多彩的线下活动'
+            />
+            <WhiteSpace/>
+            <View className='title notice'>
+              <Text className='left-icon' />
+              <Text className='txt'>购买须知</Text>
+              <Text className='right-icon' />
+            </View>
+            <WhiteSpace size='xs'/>
+            <View className='buy-have-know'>
+              <View>1. 本产品为年付费制，购买成功后可在 一年内免费畅学樊登识践串串内所有优 质内容</View>
+              <View className='buy-have-know-2'>2. 欲咨询详情，欢迎拨打樊登识践串串客服热线 410-888-2130</View>
+            </View>
+            <GetPhoneBtn fullName='to-do-buy' onBtn={this.handleToBindPhone.bind(this)} title={`￥${Numeral(price/100).format('0, 0.00')} 立即开通`} />
           </View>
-          <WhiteSpace size='xs'/>
-          <Title 
-            icon={icon1}
-            title='健康栏目'
-            content='由知名医学专家倾情打造，每周5期音频畅听'
-          />
-          <WhiteSpace size='sm'/>
-          <Title 
-            icon={icon2}
-            title='书籍解读'
-            content='经典书籍图文、音频、视频解读（非电子版原著）'
-          />
-          <WhiteSpace size='sm'/>
-          <Title 
-            icon={icon3}
-            title='兴趣课程'
-            content='英语、法律、朗诵、书法……各类精品课程免费畅学'
-          />
-          <WhiteSpace size='sm'/>
-          <Title 
-            icon={icon4}
-            title='线上社群'
-            content='基于兴趣课的专属社群，交流互动更方便'
-          />
-          <WhiteSpace size='sm'/>
-          <Title 
-            icon={icon5}
-            title='线下活动'
-            content='优享授权点组织的丰富多彩的线下活动'
-          />
-          <WhiteSpace/>
-          <View className='title-img'>
-            <Image src={vipTitle2}/>
-          </View>
-          <WhiteSpace size='xs'/>
-          <View className='buy-have-know'>
-            <View>1. 本产品为年付费制，购买成功后可在 一年内免费畅学樊登年轮学堂内所有优 质内容</View>
-            <View>2. 欲咨询详情，欢迎拨打樊登年轮学堂客服热线 410-888-2130</View>
-          </View>
-          {/* {
-            mobile ? (
-              <AtButton 
-                className='to-do-buy'
-                onClick={this.handleToBindPhone}
-              >
-                  ￥{Numeral(price/100).format('0, 0.00')} 立即开通
-              </AtButton>
-            ) : (
-              <AtButton 
-                className='to-do-buy'
-                openType='getPhoneNumber'
-                onGetPhoneNumber={this.tobegin}
-              >
-                  ￥{Numeral(price/100).format('0, 0.00')} 立即开通
-              </AtButton>
-            )
-          } */}
-          <GetPhoneBtn fullName='to-do-buy' onBtn={this.handleToBindPhone.bind(this)} title={`￥${Numeral(price/100).format('0, 0.00')} 立即开通`} />
         </View>
         <AtModal
           isOpened={this.state.isOpened}

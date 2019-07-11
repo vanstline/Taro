@@ -35,24 +35,26 @@ export default class MyPicture extends Component {
       height: '172px'
     }
     const moreImgStyle = {
-      width: '100px',
-      height: '100px',
+      width: '80px',
+      height: '80px',
       marginRight: '10px'
     }
 
 
     // console.log(img, 'img')
-    // console.log(leng, 'leng')
     return (
-      <View>
+      <View style={{ paddingTop: '10px' }}>
         {
-          leng && leng > 1 ? (
+          leng > 1 && (
             <View>
               {
                 img.map((item, i) => <Image onClick={this.handlePreviewImage.bind(this, i)} style={moreImgStyle} mode='center' src={item.src} /> )
               }
             </View>
-          ) : <Image onClick={this.handlePreviewImage} style={oneImgStyle} mode='aspectFit' src={img[0].src}/>
+          )
+        }
+        {
+          leng == 1 && <Image onClick={this.handlePreviewImage} style={oneImgStyle} mode='aspectFit' src={img[0].src}/>
         }
       </View>
     )

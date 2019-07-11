@@ -1,6 +1,5 @@
 import Taro from '@tarojs/taro';
 import { View, Text, Button } from '@tarojs/components';
-import { giveAwardDaysAfterShare } from '@services/mine'
 import connect from '../../connect/user'
 import pageInit from '../pageInit'
 import MyGraphic from '../../components/MyGraphic'
@@ -17,8 +16,9 @@ export default class Test extends Taro.Component {
 
   constructor() {
     super()
+    let typeIndex = this.$router.params.tabIndex ? this.$router.params.tabIndex - 0 : 0
     this.state = {
-      typeIndex: 0,
+      typeIndex,
       type: [
         '看视频',
         '听音频',
@@ -38,12 +38,10 @@ export default class Test extends Taro.Component {
   }
 
   onShareAppMessage(res) {
-    const { bookTitle, imgSharePosters, imgMain } = this.state.data
-    const { user: { distributorId, unionid } } = this.props
-    giveAwardDaysAfterShare()
+    const { data: { bookTitle, imgSharePosters, imgMain }, typeIndex } = this.state
     let obj =  {
       title: bookTitle,
-      path: `${this.$router.path}?uid=${unionid}&did=${distributorId}`,
+      path: `${this.$router.path}?id=${this.$router.params.id}&tabIndex=${typeIndex}&${res}`,
       imageUrl: imgSharePosters || imgMain,
     }
     return obj
@@ -70,14 +68,14 @@ export default class Test extends Taro.Component {
     })
   }
 
-  componentDidMount() {
+  componentDidShow() {
     const id = this.$router.params.id || 1;
     this.getBookDetail(id)
     
   }
 
   render() {
-    const { type, typeIndex, data } = this.state;
+    const { type, typeIndex, data={} } = this.state;
     const header = {
       id: data.bookId,
       type: 1,
@@ -86,14 +84,14 @@ export default class Test extends Taro.Component {
     return (
       <View className='details-book'>  
         <View className='media'>
-          <View className='media-cont'>
+          {header.id&&<View className='media-cont'>
             {
-              typeIndex === 0 && <MyVedio header={header} vedioObj={data.bookMediaVideoRespVos[0]} />
+              typeIndex === 0 && <MyVedio header={header} vedioObj={data.bookMediaVideoRespVos?data.bookMediaVideoRespVos[0]:{}} />
             }
             {
-              typeIndex === 1 && <MyAudio header={header} audioObj={data.bookMediaAudioRespVos[0]} />
+              typeIndex === 1 && <MyAudio header={header} audioObj={data.bookMediaAudioRespVos?data.bookMediaAudioRespVos[0]:{}} />
             }
-          </View>
+          </View>}
           <View className='media-button'>
             {
               type && type.map( (item, i) => {

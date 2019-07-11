@@ -16,7 +16,7 @@ class MyGraphic extends Component {
     return (
       <View className='my-graphic'>
         <View className='my-graphic-img'>
-          <Image src={img} />
+          <Image className='main' src={img} />
           {
             isNew && <Image className='new' src={newProduct} />
           }

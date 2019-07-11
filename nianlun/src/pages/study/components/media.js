@@ -189,7 +189,6 @@ export default class Media extends Component {
     if( this.audioPlayTime > 1 && this.state.source.bookCourseMediaAudioRespList ){
       // const { currentIndex,  } = this.props
       let obj = this.getTimeLogObj()
-
       addLearnLog({
         ...obj,
         mediaId: this.state.source.bookCourseMediaAudioRespList[0].id,

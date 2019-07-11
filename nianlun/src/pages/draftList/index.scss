@@ -67,6 +67,11 @@
     text-align: left;
   }
 
+  .at-action-sheet-item-wrap {
+    max-height: 60vh;
+    overflow-y: scroll;
+  }
+
   .at-action-sheet__footer {
     color: $gray-color;
   }

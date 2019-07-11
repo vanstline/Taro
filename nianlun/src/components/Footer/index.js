@@ -7,7 +7,7 @@ export default class Footer extends Component {
 
   render() {
 
-    console.log(this.props, '----footer')
+    // console.log(this.props, '----footer')
     return(
       <View className='my-footer' style={{ paddingBottom: this.props.system.paddinBottom }}>
         {this.props.children}

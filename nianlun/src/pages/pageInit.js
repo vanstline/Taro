@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import auth from '../utils/auth'
-
+import { giveAwardDaysAfterShare } from '../services/mine'
 function pageInit() {
   return function Component(Component) {
     return class extends Component {
@@ -13,13 +13,6 @@ function pageInit() {
       componentWillMount() {
         //初始分享信息
         initShareMenu(this.state);
-        
-        // const { path } = this.$router
-        // const userinfo = Taro.getStorageSync('userinfo')
-        // console.log(userinfo, '------userinfo')
-        // if(!userinfo) {
-        //   Taro.navigateTo({ url: '/pages/login/index' })
-        // }
       }
 
       //阻塞 didMount ， 鉴权
@@ -41,9 +34,14 @@ function pageInit() {
 
       //重写分享
       onShareAppMessage() {
-        let shareOptions = super.onShareAppMessage();
+        const { user: { distributorId, unionid } } = this.props
+        let res = `uid=${unionid}&did=${distributorId}`
+        let shareOptions = super.onShareAppMessage(res);
         //如果当前页面配置分享使用配置的
-        if (shareOptions) return shareOptions;
+        if (shareOptions) {
+          giveAwardDaysAfterShare()
+          return shareOptions
+        };
         //默认分享
         return {
           title: '默认分享内容'

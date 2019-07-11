@@ -53,7 +53,7 @@ export const queryOrderBookAndCoursePage = async(data) => {
 export const giveAwardDaysAfterShare = () => {
   return api.post( `${Host}/personalcenter/giveAwardDaysAfterShare`)
 }
-// 成为推广大使
+// 成为年轮大使
 export const toBePromoter = () => {
   return api.post( `${Host}/personalcenter/toBePromoter`)
 }

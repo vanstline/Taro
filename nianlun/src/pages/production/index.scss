@@ -71,6 +71,17 @@ page {
   .image {
     color: $gray-color;
   }
+  .image.loading {
+    .add-bar {
+      width: 100px;
+      height: 100px;
+      background: url(IMG_URL('loading.gif'));
+      background-size: 100% 100%;
+    }
+    .add-bar:nth-child(2) {
+      display: none;
+    }
+  }
 }
 
 .commit-review {

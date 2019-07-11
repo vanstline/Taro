@@ -6,7 +6,6 @@ const logoPng = `${Taro.IMG_URL}/title-v1.png`
 const ambassadorBg =`${Taro.IMG_URL}/ambassador-bg.png`
 const ambassadorScroll =`${Taro.IMG_URL}/ambassador-scroll.png`
 const ambassadorBtn =`${Taro.IMG_URL}/ambassador-btn.png`
-// import upgradePng from '../../assets/upgrade.png'
 import { toBePromoter } from '../../services/mine'
 @connectUser
 export default class Ambassador extends Taro.Component {
@@ -20,7 +19,7 @@ export default class Ambassador extends Taro.Component {
     }
   }
   config = {
-    navigationBarTitleText: '推广大使',
+    navigationBarTitleText: '年轮大使',
     comment: false
   } 
   componentDidMount() {
@@ -61,7 +60,10 @@ export default class Ambassador extends Taro.Component {
       toastText,
       showToast
     } = this.state
-    const { user: { distributorId,distributorName, unionid } } = this.props
+    const { user={} } = this.props;
+    const {
+      distributorName
+    } =user
     return <View className='z-ambassador' style={{background:`url(${ambassadorBg})`,backgroundSize:'cover'}}>
       <View className="logo">
         <Image src={logoPng}/>
@@ -69,7 +71,7 @@ export default class Ambassador extends Taro.Component {
       <View className="scroll" style={{background:`url(${ambassadorScroll})`,backgroundSize:'cover'}}>
         <View className="title">{distributorName}</View>
         <View className="describe">邀请您成为</View>
-        <View className="title">推广大使</View>
+        <View className="title">年轮大使</View>
       </View>
       <View className="btn">
         <Image src={ambassadorBtn} onClick={this.handleBePromoter.bind(this)}/>

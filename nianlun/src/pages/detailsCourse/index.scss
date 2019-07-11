@@ -6,7 +6,7 @@ $subject-header-hight: 420px;
 .subject {
 
   .header {
-    position: fixed;
+    position: relative;
     width: 100%;
     height: $subject-header-hight;
     z-index: 1;
@@ -47,11 +47,11 @@ $subject-header-hight: 420px;
   }
   
   .content {
-    padding-top: $subject-header-hight + 90px;
+    // padding-top: $subject-header-hight + 90px;
     padding-bottom: $footer-height;
     .at-tabs {
-      position: fixed;
-      top: $subject-header-hight;
+      // position: fixed;
+      // top: $subject-header-hight;
       width: 100%;
       height: auto;
       z-index: 10;;
@@ -252,13 +252,14 @@ $subject-header-hight: 420px;
       height: 64px;
       text-align: center;
       line-height: 64px;
-      font-size: 18PX;
+      font-size: 16PX;
       font-family: PingFangTC-Medium;
       font-weight: 500;
       color: rgba(76,73,72,1);
     }
     button {
-      width: 206px;
+      padding: 0;
+      width: 220px;
       height: 80px;
       line-height: 80px;
       background: rgba(255,255,255,1);

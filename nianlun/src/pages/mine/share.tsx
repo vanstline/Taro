@@ -1,12 +1,14 @@
 import Taro, { Component, useState, audioSourcesTypes } from '@tarojs/taro'
 // import upng from 'upng-js';
 import { View, Text, ScrollView, Image, Canvas } from '@tarojs/components';
+import { giveAwardDaysAfterShare } from '../../services/mine'
 import './share.scss';
 const rulePng = `${Taro.IMG_URL}/award-ruler.png`
 import api from '../../services/api'
 import { Host } from '../../services/config'
 
 export default class Share extends Component<any, any>{
+  timer=Date.now()
   constructor(props) {
     super(props);
     this.state = {
@@ -72,6 +74,8 @@ export default class Share extends Component<any, any>{
     return (num * canvasWidth / 270)
   }
   initSignature = async (callback) => {
+    console.log('signature===xxxxx',Date.now()-this.timer)
+    this.timer=Date.now()
     const response = await api.post(`${Host}/personalcenter/findPosterList`);
     const resData = response.data.data
     if (response.data.returnCode === 0) {
@@ -80,6 +84,8 @@ export default class Share extends Component<any, any>{
         posterList,
       })
     }
+    console.log('signature===0000',Date.now()-this.timer)
+    this.timer=Date.now()
     const weChatCode = Number(this.$router.params.type) === 1 ? await api.post(`${Host}/wechat/getWxacodeUnlimit`, { scene: `uid=${resData.userId}&did=${resData.distributorId}`, appId: global.common.appid },true)
       : await api.post(`${Host}/common/getQrcode`, { qrCodeWidth: 200, qrCodeHeight: 200, qrCodeUrl: `${resData.h5Url}?uid=${resData.userId}&did=${resData.distributorId}` },true);//获取微信二维码
     // console.log(weChatCode.data.data);
@@ -103,18 +109,25 @@ export default class Share extends Component<any, any>{
     ctx.fillText(this.$router.params.name || '您的好友', this.calc(canvasWidth, 70) * 3, this.calc(canvasWidth, 22) * 3)
     ctx.setFontSize(this.calc(canvasWidth, 12) * 3);
     ctx.fillStyle = '#222222'
-    ctx.fillText('邀您加入年轮学堂', this.calc(canvasWidth, 70) * 3, this.calc(canvasWidth, 43) * 3)
+    ctx.fillText('邀您加入识践串串', this.calc(canvasWidth, 70) * 3, this.calc(canvasWidth, 43) * 3)
     ctx.fillText(Number(this.$router.params.type) === 1 ? `扫描二维码立得${this.$router.params.days}天会员` : '扫描二维码即可付费入会', this.calc(canvasWidth, 70) * 3, this.calc(canvasWidth, 58) * 3)
     if (codeUrl) {  //二维码存在则画二维码
       ctx.drawImage(codeUrl, 0, 0, '100%', '100%', this.calc(canvasWidth, 210) * 3, this.calc(canvasWidth, 10) * 3, this.calc(canvasWidth, 50) * 3, this.calc(canvasWidth, 50) * 3)
     } else {
       ctx.fillRect(this.calc(canvasWidth, 210) * 3, this.calc(canvasWidth, 10) * 3, this.calc(canvasWidth, 50) * 3, this.calc(canvasWidth, 50) * 3);
     }
+    console.log('signature===111',Date.now()-this.timer)
+    this.timer=Date.now()
     ctx.draw(true, async () => {
-
+      console.log('signature===222',Date.now()-this.timer)
+      this.timer=Date.now()
+      setTimeout(() => {
       Taro.canvasToTempFilePath({
+        fileType: 'jpg',
         canvasId: 'signature',
         success: (res) => {
+          console.log('signature===333',Date.now()-this.timer)
+          this.timer=Date.now()
           this.setState({
             signatureUrl: res.tempFilePath,
           }, () => {
@@ -122,6 +135,7 @@ export default class Share extends Component<any, any>{
           })
         }
       })
+    },300)
 
     });
   }
@@ -131,15 +145,15 @@ export default class Share extends Component<any, any>{
     this.ctx = Taro.createCanvasContext('shareCanvas', this.$scope);
     this.ctx.drawImage(signatureUrl, 0, 0, '100%', '100%', 0, this.calc(canvasWidth, canvasHeight - 70) * 3, canvasWidth * 3, this.calc(canvasWidth, 70) * 3)
     this.ctx.draw(true, () => {
-      Taro.canvasToTempFilePath({
-        canvasId: 'shareCanvas',
-        success: (res) => {
-          // console.log(res);
-          // this.setState({
-          //   shareImage: res.tempFilePath,
-          // })
-        }
-      })
+      // Taro.canvasToTempFilePath({
+      //   canvasId: 'shareCanvas',
+      //   success: (res) => {
+      //     // console.log(res);
+      //     // this.setState({
+      //     //   shareImage: res.tempFilePath,
+      //     // })
+      //   }
+      // })
       if (posterList.length > 0) {
         this.clickImg(posterList[0], 0)
       }
@@ -151,13 +165,23 @@ export default class Share extends Component<any, any>{
     this.ctx.clearRect(0, 0, canvasWidth * 3, 99999);
     this.ctx.drawImage(image, 0, 0, '100%', '100%', 0, 0, canvasWidth * 3, this.calc(canvasWidth, canvasHeight - 70) * 3)
     this.ctx.drawImage(signatureUrl, 0, 0, '100%', '100%', 0, this.calc(canvasWidth, canvasHeight - 70) * 3, canvasWidth * 3, this.calc(canvasWidth, 70) * 3)
+    console.log('timer===111',Date.now()-this.timer)
+    this.timer=Date.now()
     this.ctx.draw(true, () => {
+      console.log('timer===222',Date.now()-this.timer)
+      this.timer=Date.now()
+      setTimeout(() => {
       Taro.canvasToTempFilePath({
+        fileType: 'jpg',
         canvasId: 'shareCanvas',
         success: async (res) => {
+          console.log('timer===333',Date.now()-this.timer)
+          this.timer=Date.now()
           const d = await Taro.getImageInfo({
             src: res.tempFilePath
           })
+          console.log('timer===444',Date.now()-this.timer)
+          this.timer=Date.now()
           // console.log(d);
           this.setState({
             shareImage: res.tempFilePath,
@@ -177,6 +201,7 @@ export default class Share extends Component<any, any>{
           })
         }
       })
+    }, 300)
     });
   }
   addImage = () => {
@@ -224,17 +249,7 @@ export default class Share extends Component<any, any>{
   clickImg = async (src, active) => {
     Taro.showToast({title:'加载中', icon: 'loading'});
     const { canvasWidth, imgs } = this.state;
-    // if(imgs.has(src)){
-    //   const { width, height, path } = imgs.get(src);
-    //   // console.log(width, height, canvasWidth, canvasWidth * (height / width) + 70)
-    //   this.setState({
-    //     shareImage: '',
-    //     image: path,
-    //     scaleX: width / canvasWidth,
-    //     canvasHeight: canvasWidth * (height / width) + 70,
-    //     active,
-    //   }, () => this.updateCanvas())
-    // }else{
+    
       const { width, height, ...other } = await Taro.getImageInfo({ src });
       // console.log('clickImg', width, height, canvasWidth, canvasWidth * (height / width) + 70)
       // console.log(width, height, canvasWidth, canvasWidth * (height / width) + 70)
@@ -252,9 +267,11 @@ export default class Share extends Component<any, any>{
 
   showBigImg = () => {
     const { shareImage } = this.state;
+    giveAwardDaysAfterShare()
     Taro.previewImage({
       urls: [shareImage]
     })
+
   }
 
   canvasId: any = null;
@@ -262,20 +279,20 @@ export default class Share extends Component<any, any>{
   render() {
     const { canvasHeight, shareImage, canvasWidth, screenHeight, posterList = [], active, own, imageWidth, imageHeight } = this.state;
     // console.log('share', canvasWidth, canvasHeight)
-    let _width = canvasWidth * 2 * 0.8;
-    let _height = imageHeight * canvasWidth / imageWidth * 2 * 0.8;
+    let _width = canvasWidth * 2 ;
+    let _height = imageHeight * canvasWidth / imageWidth * 2 ;
     _height = _height || 400;
     // console.log('before', _width, _height, screenHeight);
-    if(_height && _height > screenHeight * 0.85){
-      _width = screenHeight * 0.85 * _width / _height;
-      _height = screenHeight * 0.85;
+    if(_height && _height > screenHeight){
+      _width = screenHeight * _width / _height;
+      _height = screenHeight;
     }
     // console.log('after', _width, _height, screenHeight);
     const list = own ? [own, ...posterList] : posterList;
     return <View className='share-container'>
       <Canvas ref={node => this.canvas = node} canvasId='signature' className='share-big-image-signature'></Canvas>
-      <View className='share-big-image' style={{ width: Taro.pxTransform(canvasWidth * 2), minHeight: Taro.pxTransform(410 * 2) }}>
-        <Image mode='aspectFit' onClick={this.showBigImg} className='share-big-image-content' style={{ width: Taro.pxTransform(_width), height: Taro.pxTransform(_height) }} src={shareImage} />
+      <View className='share-big-image' style={{ width: Taro.pxTransform(canvasWidth * 2), minHeight: Taro.pxTransform(screenHeight * 0.55 * 2) }}>
+        {shareImage&&<Image mode='aspectFit' onClick={this.showBigImg} className='share-big-image-content' style={{ width: Taro.pxTransform(_width), height: Taro.pxTransform(_height) }} src={shareImage} />}
         {/* <Image mode='aspectFit' onClick={this.showBigImg} className='share-big-image-content' style={{ width: Taro.pxTransform(canvasWidth * 2 * 0.6), height: Taro.pxTransform(imageHeight * canvasWidth / imageWidth * 2 * 0.6) }} src={shareImage} /> */}
         <Canvas style={{ height: Taro.pxTransform(canvasHeight * 2 * 3) }} className='share-big-image-canvas' canvasId='shareCanvas'></Canvas>
       </View>

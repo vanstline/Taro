@@ -27,7 +27,7 @@ export default class Book extends Taro.Component {
     this.state = {
       pageIndex: 0,
       lastPage: 1,
-      pageSize: 20,
+      pageSize: 10,
       list: [],
       noMore: false,
       advertise:'',
@@ -109,18 +109,17 @@ export default class Book extends Taro.Component {
     const { type } = this.$router.params
     return(
       <Page full className='list'>  
-        <View className='banner'>
+        
+        
+        <ScrollView
+            className='scroll-view'
+            scrollY={true}
+            onScrollToLower={this.onScroll}
+          >
+            <View className='banner'>
           <Image src={advertise}></Image>
           {/* <MySwiper bannerList={bannerList} /> */}
           </View>
-        <View className='content'>
-        {/* <ScrollView
-            className='scroll-view'
-            scrollY
-            enableBackToTop
-            lowerThreshold={50}
-            onScrollToLower={this.onScroll}
-          > */}
             {
               list.map( (item,index) => {
                 return (
@@ -128,7 +127,10 @@ export default class Book extends Taro.Component {
                     <MyGraphic title={type == 2 ? item.title : item.bookTitle} img={item.imgMain}>
                     <View className="graphic-describe">
                         <View className='graphic-content'>{type == 2 ? item.commendDesc : item.commendTitle}</View>
-                        <View className='graphic-button'>{type==2? `更新至${item.updatedChapters}期 `:''} {item.studyNum}人学习</View>
+                        <View className='graphic-button'>
+                          <View>{type==2? (item.finished ?<Text>已完结 共{item.updatedChapters}期 </Text>:<Text>更至{item.updatedChapters}期 </Text>):''} {item.studyNum}人学习</View>
+                          <Text className="graphic-learn">学习</Text>
+                        </View>
                       </View>
          
                     </MyGraphic>
@@ -136,11 +138,13 @@ export default class Book extends Taro.Component {
                 )
               } )
             }
-             {/* </ScrollView> */}
+             </ScrollView>
             {
               (isReload&&list.length===0) && <View className='no-more'>暂无数据</View>
             }
-        </View>
+            {
+              noMore && <View className='no-more'>无更多数据</View>
+            }
       </Page>
     )
   }

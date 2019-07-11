@@ -8,6 +8,72 @@
     border-radius: 100%;
     overflow: hidden;
   }
+  .exclusive-code {
+    width: 85%;
+    margin:auto;
+    background: #fff;
+    border-radius:16px;
+    padding: 32px;
+    color: #333;
+    position: relative;
+    .title {
+      width:292px;
+      height:64px;
+      background:rgba(253,216,0,1);
+      border-radius:8px;
+      font-size: 32px;
+      text-align: center;
+      line-height: 64px;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      margin-left: -146px;
+      display: -webkit-box;
+        -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;   //行数为2
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .userinfo {
+      display: flex;
+      padding-top: 32px;
+      .avatar {
+        width: 56px;
+        height: 56px;
+        line-height: 56px;
+      }
+      .nickname {
+        font-size:32px;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+        padding-left: 20px;
+        line-height: 56px;
+      }
+    }
+    .code {
+      width: 320px;
+      height: 320px;
+      margin: auto;
+      padding: 32px 0;
+    }
+    .footer {
+      padding: 0 32px;
+      text-align: center;
+      .button {
+        background:linear-gradient(180deg,rgba(254,233,0,1) 0%,rgba(252,207,0,1) 100%);
+        border-radius:50px;
+        
+      }
+      .tip {
+        padding-top: 16px;
+        font-size:28px;
+        font-weight:400;
+        color:rgba(153,153,153,1);
+        text-align: center
+      }
+    }
+    
+  }
 }
 .info-update {
   height: 100vh;

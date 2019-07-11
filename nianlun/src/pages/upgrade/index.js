@@ -1,8 +1,12 @@
 import Taro from '@tarojs/taro';
 import { View, Image} from '@tarojs/components';
+import {
+  userScaned,
+} from '../../services/user';
 import './index.scss'
 const rogerPng = `${Taro.IMG_URL}/roger.png`
 const upgradePng = `${Taro.IMG_URL}/upgrade.png`
+
 export default class Upgrade extends Taro.Component {
 
   constructor() {
@@ -18,11 +22,15 @@ export default class Upgrade extends Taro.Component {
   } 
   componentDidMount() {
     
-    // this.getActivityDetail()
   }
-  
-  handleToBack = () =>{
-    Taro.navigateTo({ url: `/pages/activity/index` })
+
+  handleToBack = async() =>{
+    const { type, title, id=1,code} = this.$router.params;
+    let res = await userScaned({id})
+    if(res && res.data.returnCode === 0){
+      Taro.switchTab({ url: `/pages/index/index` })
+    }
+    
   }
 
   
@@ -30,8 +38,8 @@ export default class Upgrade extends Taro.Component {
 
   render() {
     const { _isOpened=true } = this.state
-    const { text, hasMask=true, type } = this.props
-
+    const { type, title, id=1,code} = this.$router.params;
+    const { text, hasMask=true } = this.props
 
 
     return _isOpened ? (

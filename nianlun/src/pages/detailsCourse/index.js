@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text, Form, Switch, Button } from '@tarojs/components'
 import Numeral from 'numeral';
-import { AtTabs, AtTabsPane } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtModal } from 'taro-ui'
 // import { connect } from '@tarojs/redux'
 import connect from '../../connect/course'
 import connectUser from '../../connect/user'
@@ -37,9 +37,14 @@ export default class Subject extends Component {
       homeworkTop: 0,
       isScrool: false,
       homeworkList: [],
+      isOpened: false,
     }
   }
 
+  config = {
+    navigationBarTitleText: '拼命加载中...',
+  }
+  
   handleClick (value) {
     this.setState({
       current: value,
@@ -49,14 +54,16 @@ export default class Subject extends Component {
 
   handleClickToStudy = (item, i) => {
     const id = this.$router.params.id || global.common.bookCourseId
-    const { course: { purchased, unitPrice, iosPrice, member, bccList } } = this.state
+    const { system: { IOS } } = this.props
+    const { course: { purchased, unitPrice, iosPrice, member, bccList, lastLearnBookCourseChapterId } } = this.state
     if(purchased || member) {
       // 会员直接进入阅读页  有章节 传章节 没有就首页
       if(item) {
         Taro.navigateTo({url: `/pages/study/index?id=${id}&chapterId=${item.id}`})
 
       } else {
-        Taro.navigateTo({url: `/pages/study/index?id=${id}&chapterId=${bccList[0].id}`})
+        let chapterId = lastLearnBookCourseChapterId ? lastLearnBookCourseChapterId : bccList[0].id
+        Taro.navigateTo({url: `/pages/study/index?id=${id}&chapterId=${chapterId}`})
       }
     } else {
       // 非会员 看当前是否可以试听 没有去购买页
@@ -64,7 +71,7 @@ export default class Subject extends Component {
         if(item.trial) {
           Taro.navigateTo({url: `/pages/study/index?id=${id}&chapterId=${item.id}`})
         } else {
-          Taro.navigateTo({url: `/pages/buy/index?id=${id}&unitPrice=${unitPrice}&member=${member}&type=3`})
+          IOS ? this.setState({isOpened: true}) : Taro.navigateTo({url: `/pages/buy/index?id=${id}&unitPrice=${unitPrice}&member=${member}&type=3`})
         }
       } else {
         Taro.navigateTo({url: `/pages/study/index?id=${id}&chapterId=${bccList[0].id}`})
@@ -73,17 +80,15 @@ export default class Subject extends Component {
   }
 
   componentDidMount() {
-    // this.fetchLesson()
-   
-   
+    // console.log(this.$router, '-------------router')
   }
 
   componentDidShow() {
     this.fetchRequset()
-    console.log(this.props, '------------this.props')
+    // console.log(this.props, '------------this.props')
     Taro.getSystemInfo({
       success:function(res) {
-        console.log(res, '-----getSystemInfo')
+        // console.log(res, '-----getSystemInfo')
       }
     })
   }
@@ -117,11 +122,9 @@ export default class Subject extends Component {
 
   onShareAppMessage(res) {
     const { title, imgSharePosters, imgMain } = this.state.course
-    const { user: { distributorId, unionid } } = this.props
-    giveAwardDaysAfterShare()
     let obj =  {
-      title: title,
-      path: `${this.$router.path}?uid=${unionid}&did=${distributorId}`,
+      title,
+      path: `${this.$router.path}?id=${this.$router.params.id}&${res}`,
       imageUrl: imgSharePosters || imgMain,
     }
     return obj
@@ -144,17 +147,23 @@ export default class Subject extends Component {
   }
 
   handleContact(e) {
-    // console.log(e.path, '--------用户所点消息的页面路径path')
-    // console.log(e.query, '-----------------对应的参数query')
   }
 
 
   render() {
     const tabList = [{ title: '介绍' }, { title: '目录' }, { title: '作品区' }]
-    const { current, homeworkList, course  } = this.state
+    const { system: { IOS } } = this.props
+    const { current, homeworkList, course={}  } = this.state
     
     const imgMedia = course.imgMedia || global.common.imgMedia
     const bccList = course.bccList || []
+    let studyText 
+    if(course && (course.member || course.purchased)) {
+      studyText = course.lastLearnBookCourseChapterId ? '继续学习' : '开始学习'
+    } else {
+      studyText = '试听学习'
+    }
+
     return (
       <View className='subject'>
         <View className='header'>
@@ -189,20 +198,22 @@ export default class Subject extends Component {
                       <View className='recent'>更新至{course.updatedChapters}期</View>
                       <View className='man'>{course.studyNum || 0}人学习</View>
                     </View>
-                    <View className='price'>{`￥${Numeral(course.unitPrice/100).format('0, 0.00')}`}元</View>
-                        <View className='member'>
-                          <View className='member-price'>￥0元</View>
-                          <View className='member-icon'>会员</View>
+                    {
+                      !IOS && (
+                        <View >
+                          <View className='price'>{`￥${Numeral(course.unitPrice/100).format('0, 0.00')}`}元</View>
+                          <View className='member'>
+                            <View className='member-price'>￥0元</View>
+                            <View className='member-icon'>会员</View>
+                          </View>
                         </View>
-                    {/* {
-                      course.member && (
-                      ) */}
-                    {/* } */}
+                      )
+                    }
                   </View>
                 </MyCard>
                 <WhiteSpace />
                 <View className='dec'>
-                  <ToHtml html={course.courseDesc} />
+                  <View><ToHtml html={course.courseDesc} /></View>
                 </View>
               </View>
             )
@@ -212,13 +223,10 @@ export default class Subject extends Component {
               <View>
                 <WhiteSpace />
                 <View className='catalog'>
-                  <MyCard title='课程名称'>
+                  <MyCard title='课程目录'>
                     <View className='catalog-body'>
                       {
                         bccList.map( (item, i) => {
-                          // let playText = (course.member || course.purchased) ? '播放' : ( !item.trial ? '解锁' : '试学' )
-
-                          // let grayClass = (!course.member || !course.purchased || !item.trial ) ? 'gary' : ''
                           let lessonBtnStatus = (course.member || course.purchased) ? 'lesson-play' : ( !item.trial ? 'lesson-lock' : 'lesson-try' )
                           let isVedio = false
                           isVedio = item.bookCourseMediaVideoRespList && item.bookCourseMediaVideoRespList.some( ele => ele.fileType === 1 )
@@ -233,10 +241,6 @@ export default class Subject extends Component {
                               </View>
                               <View className='btn-wrap'>
                                 <View className={lessonBtnStatus} />
-                                {/* <View className={`btn at-col ${grayClass}`}>
-                                  <Image className='at-col at-col-4' src={play} />
-                                  <Text className='at-col at-col-6'>{playText}</Text>
-                                </View> */}
                               </View>
                             </View>
                           )
@@ -267,10 +271,20 @@ export default class Subject extends Component {
         <Footer>
           <View className='footer'>
               <Button openType='contact' onContact={this.handleContact}>在线咨询</Button>
-              <Button onClick={this.handleClickToStudy.bind(this, null)}>试听学习</Button>
+              <Button onClick={this.handleClickToStudy.bind(this, null)}>{studyText}</Button>
               <Button openType='share'>分享</Button>
             </View>
         </Footer>
+        <AtModal
+          isOpened={this.state.isOpened}
+          title='提示'
+          cancelText='联系书童'
+          confirmText='确认'
+          onClose={ () => this.setState({ isOpened: false }) }
+          onCancel={ () => this.setState({ isOpened: false }, () => Taro.navigateTo({ url: '/pages/livehand/index' })) }
+          onConfirm={ () => this.setState({ isOpened: false }) }
+          content='由于相关规范，iOS功能暂不可用'
+        />
       </View>
     )
   }

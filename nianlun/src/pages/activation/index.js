@@ -33,7 +33,7 @@ export default class Activation extends Taro.Component {
   // } 
 
   config = {
-    navigationBarTitleText: '年轮学堂',
+    navigationBarTitleText: '识践串串',
   }
 
   onClose = () => {
@@ -47,19 +47,10 @@ export default class Activation extends Taro.Component {
   }
 
   handleToBind = () => {
-    const { path } = this.$router
-    // Taro.navigateTo({
-    //   url: `/pages/bindPhone/index?path=${path}`
-    // })
-    // TODO:
-    // debugger
-    
   }
 
 
   render() {
-    console.log(this.props.user, '-----------user')
-    
     return (
       <View className='wrap'>
         <AtCurtain

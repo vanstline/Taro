@@ -21,17 +21,28 @@ export default class MySwiper extends Component {
 
   handleChange = (e) => {
     let { current } = e.detail
-    this.props.onCallback(current)
+    const { onCallback } = this.props
+    if(onCallback && typeof onCallback === 'function') onCallback(current)
   }
-  // 详情页 1书 2课
-  handleToDetail (type=1,id,chapterId) {
+  // 类型1、书籍2、书单3、课程4、外部链接,5.有赞商城链接，6.内部链接
+   handleToDetail (type=1,id,chapterId) {
+    let flag = isNaN(chapterId)
     if(type===1){
       Taro.navigateTo({
         url: `/pages/detailsBook/index?id=${id}`
       })
-    }else if(type===2){
+    }else if(type===3){
+      let url = `/pages/${!flag && chapterId ? 'study' : 'detailsCourse'}/index?id=${id}&chapterId=${chapterId}`
       Taro.navigateTo({
-        url: `/pages/detailsCourse/index?id=${id}&chapterId=${chapterId}`
+        url
+      })
+    }else if(type===4){
+      Taro.navigateTo({
+        url:`/pages/h5Static/index?url=${id}`
+      })
+    }else if(type===6){
+      Taro.navigateTo({
+        url:id
       })
     }
     
@@ -47,10 +58,11 @@ export default class MySwiper extends Component {
         indicatorActiveColor='#fff'
         autoplay={autoplay}
         onChange={this.handleChange}
+        style={{ height: this.props.height }}
       >
         { bannerList.map((item, i) => (
-          <SwiperItem onClick={this.handleToDetail.bind(this,item.type,item.id)} id={item.id || i} key={item.id || i}>
-            <Image className="swiper-img" mode="widthFix" src={item.mediaPath}></Image>
+          <SwiperItem onClick={this.handleToDetail.bind(this,item.type,item.linkUrl)} id={item.id || i} key={item.id || i}>
+            <Image style={this.props.style} className="swiper-img" mode="widthFix" src={item.mediaPath}></Image>
           </SwiperItem>
         ))}
       </Swiper>

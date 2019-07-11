@@ -1,6 +1,9 @@
+const Host = require('./host')
+
 module.exports = {
   env: {
     NODE_ENV: '"development"',
+    Host: Host[process.env.NODE_ENV],
   },
   defineConstants: {
   },
